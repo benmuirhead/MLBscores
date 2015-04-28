@@ -13,25 +13,21 @@ import javax.swing.JPanel;
  *
  * 
  */
-public class testRun extends JFrame{
+public class testRun extends JFrame {
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		testRun test = new testRun();
 	}
-	public testRun()
-	{
+
+	public testRun() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.init();
 	}
-	public void init()
-	{
-<<<<<<< HEAD
-		GameDay testGames = new GameDay(2015,06,23);
-=======
-		GameDay testGames = new GameDay(2015,05,23);
->>>>>>> ce559bcaf185c5a864aca0d3421b2fb8cd02fb45
+
+	public void init() {
+		GameDay testGames = new GameDay(2015, 06, 23);
 		System.out.println(testGames.toString());
 		List<Game> gameList = testGames.getGames();
 		JPanel lineTest = Utility.drawLineScore(gameList.get(0));
