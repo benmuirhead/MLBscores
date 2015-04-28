@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 /**
  * @author Samuel Doud
+ * @author Ben Muirhead
  *
  */
 public class testRun extends JFrame{
