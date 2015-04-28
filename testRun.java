@@ -27,7 +27,7 @@ public class testRun extends JFrame{
 	}
 	public void init()
 	{
-		GameDay testGames = new GameDay(2015,03,23);
+		GameDay testGames = new GameDay(2015,05,23);
 		System.out.println(testGames.toString());
 		List<Game> gameList = testGames.getGames();
 		JPanel lineTest = Utility.drawLineScore(gameList.get(0));
