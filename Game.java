@@ -1,4 +1,3 @@
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.BufferedReader;
@@ -16,7 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
 /**
- * 
+ * A class which holds the data for a given game in the form of a URL on the MLB API
  */
 
 /**

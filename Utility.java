@@ -1,5 +1,6 @@
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.Calendar;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -41,5 +42,20 @@ public class Utility
 		}
 		return value;
 	}
+	public static int[] convertCalendarToDate(Calendar c)
+	{
+		
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		
+		return new int[]{year,month,day};
+	}
+	public static Calendar nextDay(Calendar c)
+	{
+		c.add(Calendar.DAY_OF_MONTH, 1);
+		return c;
+	}
+	
 
 }
