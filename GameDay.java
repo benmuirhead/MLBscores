@@ -122,7 +122,6 @@ public class GameDay
 		
 		//all addresses have been created
 	}
-	
 	/**
 	 * Returns the list of Games
 	 * Irrespective of League
@@ -181,7 +180,8 @@ public class GameDay
 		return ILGames;
 	}
 	/**
-	*
+	*	Takes the gameAddress and makes a Game out of them. Adds that game to
+	*	the List of gamesToday
 	 */
 	public void createGameObjects()
 	{
@@ -191,7 +191,6 @@ public class GameDay
 			gamesToday.add(new Game(s));//creates a new game of String s
 		}
 	}
-
 	public String toString()
 	{
 		String text = "";

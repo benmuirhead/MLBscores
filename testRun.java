@@ -43,8 +43,6 @@ public class testRun extends JFrame {
 		Calendar endDate = Utility.convertDateToCalendar(2014, 4, 20);
 		String team = Team.angels;
 		
-		
-		
 		GameRange testRange = new GameRange(team,startDate,endDate);
 		List<Game> testRangeGames = testRange.getGames();
 		List<JPanel> testRangePanels = new ArrayList<JPanel>();
@@ -67,7 +65,7 @@ public class testRun extends JFrame {
 		this.setSize(100, 300);
 		this.setResizable(true);
 		this.add(jScrollPane);
-		this.add(testRange.drawRecord());
+		//this.add(testRange.drawRecord()); This is functional
 		this.setVisible(true);
 	}
 

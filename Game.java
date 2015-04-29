@@ -586,7 +586,6 @@ public class Game
 	{
 		return awayTeam;
 	}
-	
 	public static JScrollPane putInScrollPane(List<JPanel> panels)
 	{
 		JScrollPane scroller = new JScrollPane();
