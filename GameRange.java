@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 
 public class GameRange {
 	private String baseAddress = "http://gd2.mlb.com/components/game/mlb/";
@@ -16,6 +18,7 @@ public class GameRange {
 	private List<String> dateHTML = new ArrayList<String>();
 	private List<Game> gamesPlayedByTeam = new ArrayList<Game>();
 	Calendar start, end;
+	private int wins, losses;
 	/**
 	 * 
 	 * @param team a string in the form of a abbreviation. Use the static variables of the team class
@@ -29,8 +32,8 @@ public class GameRange {
 		this.name = team;
 		this.populateDateAddresses();
 		this.findGames();
-		//TODO find the games...
-		//TODO
+		this.fixRecord();
+		//TODO find the record
 	}
 	/**
 	 * Populate the date address list with the addresses of the Date
@@ -150,6 +153,25 @@ public class GameRange {
 	{
 		return gamesPlayedByTeam;
 	}
-
-
+	private void fixRecord()
+	{
+		for (Game g : gamesPlayedByTeam)
+		{
+			if (g.didTeamWin(name))
+			{
+				wins++;
+			}
+			else
+			{
+				if(g.didTeamLose(name))
+				{
+					losses++;
+				}
+			}
+		}
+	}
+	public JLabel drawRecord()
+	{
+		return new JLabel(wins + "-" + losses);
+	}
 }

@@ -1,8 +1,13 @@
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * 
@@ -34,22 +39,35 @@ public class testRun extends JFrame {
 		//JPanel lineTest = gameList.get(0).drawDetailed();
 		
 		
-		Calendar startDate = Utility.convertDateToCalendar(2015, 4,15);
-		Calendar endDate = Utility.convertDateToCalendar(2015, 4, 20);
+		Calendar startDate = Utility.convertDateToCalendar(2014, 4,10);
+		Calendar endDate = Utility.convertDateToCalendar(2014, 4, 20);
 		String team = Team.angels;
 		
 		
 		
 		GameRange testRange = new GameRange(team,startDate,endDate);
 		List<Game> testRangeGames = testRange.getGames();
+		List<JPanel> testRangePanels = new ArrayList<JPanel>();
 		
-		JPanel lineTest = testRangeGames.get(0).drawBasicScoreWithDate();
+		for (Game g : testRangeGames)
+		{
+			testRangePanels.add(g.drawBasicScoreWithDate());
+		}
+				
+		JPanel listHolder = new JPanel();
+		GridLayout grid = new GridLayout(testRangePanels.size(),1);
+		listHolder.setLayout(grid);
 		
+		for (JPanel panel : testRangePanels)
+		{
+			listHolder.add(panel);
+		}
+		JScrollPane jScrollPane = new JScrollPane(listHolder);
 		
-		
-		this.setSize(500, 500);
-		this.setResizable(false);
-		this.add(lineTest);
+		this.setSize(100, 300);
+		this.setResizable(true);
+		this.add(jScrollPane);
+		this.add(testRange.drawRecord());
 		this.setVisible(true);
 	}
 

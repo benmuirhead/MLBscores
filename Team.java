@@ -26,6 +26,7 @@ public class Team
 	public static final String rockies = "col";
 	public static final String tigers = "det";
 	public static final String astros = "hou";
+	public static final String royals = "kca";
 	public static final String dodgers = "lan";
 	public static final String marlins = "mia";
 	public static final String brewers = "mil";
@@ -46,7 +47,7 @@ public class Team
 	
 	
 	
-	public static final String[] abbreviationKey = {angels,diamondBacks,braves,orioles,redSox,whiteSox,cubs,reds,indians,rockies,tigers,astros,dodgers,marlins,brewers,twins,yankees,mets,athletics,phillies,pirates,padres,mariners,giants,cardinals,rays,rangers,blueJays,nationals};
+	public static final String[] abbreviationKey = {angels,diamondBacks,braves,orioles,redSox,whiteSox,cubs,reds,indians,rockies,tigers,astros,royals, dodgers,marlins,brewers,twins,yankees,mets,athletics,phillies,pirates,padres,mariners,giants,cardinals,rays,rangers,blueJays,nationals};
 	public static final String[] cityKey = {"Los Angeles","Arizona","Atlanta","Baltimore","Boston","Chicago","Chicago","Cincinati","Cleveland","Colorado","Detroit","Houston","Kansas City","Los Angeles","Miami","Milwaukee","Minnesota","New York","New York","Oakland","Philidelphia","Pittsburgh","San Diego","Seattle","San Francisco","St. Louis","Tampa Bay","Texas","Toronto","Washington"};
 	public static final String[] nameKey = {"Angels","Diamondbacks","Braves","Orioles","Red Sox","White Sox","Cubs","Reds","Indians","Rockies","Tigers","Astros","Royals","Dodgers","Marlins","Brewers","Twins","Yankees","Mets","Athletics","Phillies","Pirates","Padres","Mariners","Giants","Cardinals","Rays","Rangers","Blue Jays","Nationals"};
 	public static final String[] leagueDivisionKey = {"aw","nw","ne","ae","ae","ac","nc","nc","ac","nw","ac","aw","ac","nw","ne","nc","ac","ae","ne","aw","ne","nc","nw","aw","nw","nc","ae","aw","ae","ne"};

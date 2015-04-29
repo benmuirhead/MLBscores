@@ -8,12 +8,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
+
+import java.awt.Color;
 
 /**
  * A class which holds the data for a given game in the form of a URL on the MLB API
@@ -232,9 +236,11 @@ public class Game
 	 */
 	public JPanel drawBasicScoreWithDate()
 	{
-		JLabel dateLabel = new JLabel(myDate.get(Calendar.MONTH) + "/" + myDate.get(Calendar.DAY_OF_MONTH) +"/" + myDate.get(Calendar.YEAR));
+		//creates a date of format MM/DD/YY
+		String dateFormat = myDate.get(Calendar.MONTH) + "/" + myDate.get(Calendar.DAY_OF_MONTH) +"/" + myDate.get(Calendar.YEAR) % 100;
+		JLabel dateLabel = new JLabel(dateFormat);
 		
-		
+		//the fonts of the winners and losers
 		Font winner = new Font("",Font.BOLD,12);
 		Font loser = new Font("",Font.PLAIN,12);
 		JPanel basicScorePanel = new JPanel();
@@ -262,7 +268,7 @@ public class Game
 		//Create a label of the team name and score
 		JLabel homeLabel = new JLabel(homeName + homeScoreInning[runsIndex]);
 		JLabel awayLabel = new JLabel(awayName + awayScoreInning[runsIndex]);
-		//Determine winner (or leader, if tied, no bold)
+		//Determine winner (or leader, if tied, no bold) winner is bolded
 		if (homeScoreInning[runsIndex]>awayScoreInning[runsIndex])
 		{
 			homeLabel.setFont(winner);
@@ -273,17 +279,24 @@ public class Game
 			awayLabel.setFont(winner);
 			homeLabel.setFont(loser);
 		}
-		basicScorePanel.add(awayLabel);
+		basicScorePanel.add(awayLabel);//add the labels
 		basicScorePanel.add(homeLabel);
 		
-		basicScorePanel.setSize(100, 30);
-		
+		basicScorePanel.setSize(85, 30);//give the panel n arbbitrary size
+		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));//put a border around the panel
 		return basicScorePanel;
 	}
+	/**
+	 * Create a panel with the teams and their scores
+	 * Bold the text of the winner
+	 * @return
+	 */
 	public JPanel drawBasicScore()
 	{
+		//the fonts the winners and losers will use
 		Font winner = new Font("",Font.BOLD,12);
 		Font loser = new Font("",Font.PLAIN,12);
+		
 		JPanel basicScorePanel = new JPanel();
 		GridLayout grid = new GridLayout(2,1);
 		basicScorePanel.setLayout(grid);
@@ -306,7 +319,7 @@ public class Game
 		//Create a label of the team name and score
 		JLabel homeLabel = new JLabel(homeName + homeScoreInning[runsIndex]);
 		JLabel awayLabel = new JLabel(awayName + awayScoreInning[runsIndex]);
-		//Determine winner (or leader, if tied, no bold)
+		//Determine winner (or leader, if tied, no bold) and bold the winner's text
 		if (homeScoreInning[runsIndex]>awayScoreInning[runsIndex])
 		{
 			homeLabel.setFont(winner);
@@ -317,11 +330,11 @@ public class Game
 			awayLabel.setFont(winner);
 			homeLabel.setFont(loser);
 		}
-		basicScorePanel.add(awayLabel);
+		basicScorePanel.add(awayLabel);//add the created score labels to the panel
 		basicScorePanel.add(homeLabel);
 		
-		basicScorePanel.setSize(100, 30);
-		
+		basicScorePanel.setSize(85, 30);//give the panel an arbitaray size
+		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));//put a border around the panel
 		return basicScorePanel;
 	}
 	/**
@@ -416,6 +429,7 @@ public class Game
 		
 		JScrollPane scroll = new JScrollPane(lineTable);
 		scroll.setSize(500, 100);
+		scroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		return scroll;
 		/*
 		JPanel homePanel = new JPanel();
@@ -511,8 +525,8 @@ public class Game
 	public boolean isAmericanLeague()
 	{
 		return (homeTeam.isAmericanLeague() && awayTeam.isAmericanLeague());
-	}/**
-	 * Is the game between two National league teams?
+	}
+	 /** Is the game between two National league teams?
 	 * @return
 	 */
 	public boolean isNationalLeague()
@@ -571,5 +585,73 @@ public class Game
 	public Team getAwayTeam()
 	{
 		return awayTeam;
+	}
+	
+	public static JScrollPane putInScrollPane(List<JPanel> panels)
+	{
+		JScrollPane scroller = new JScrollPane();
+		for (JPanel panel : panels)
+		{
+			scroller.add(panel);
+		}
+		return scroller;
+	}
+	/**
+	 * Determines if the team passed won the game
+	 * @param team the team to be checked
+	 * @return a boolean, true if the team won the game. False in anyother situation (loss, not complete)
+	 */
+	public boolean didTeamWin(String team)
+	{
+		if (Utility.JSONValueReader(lineScoreXML, Game.statusKey).equals("Final"))
+		{//game is complete and therefore there is a winner or loser
+			if (homeTeam.getName().equals(team))//the passed team is the home team
+			{
+					if (homeScoreInning[runsIndex] > awayScoreInning[runsIndex])
+					{//the home team out scored the away team
+						return true;
+					}
+					return false;
+				
+			}
+			else //the passed team is the away team
+			{
+				if (homeScoreInning[runsIndex] > awayScoreInning[runsIndex])
+				{//the home team out scored the away team
+					return false;
+				}
+				return true;
+			}
+		}
+		return false;//the game is not complete
+	}
+	/**
+	 * Determines if the team passed lost the game
+	 * @param team the team to be checked
+	 * @return a boolean, true if the team lost the game. False in anyother situation (victory, not complete)
+	 */
+	public boolean didTeamLose(String team)
+	{
+		if (Utility.JSONValueReader(lineScoreXML, Game.statusKey).equals("Final"))
+		{//game is complete and therefore there is a winner or loser
+			if (homeTeam.getName().equals(team))//the passed team is the home team
+			{
+					if (homeScoreInning[runsIndex] > awayScoreInning[runsIndex])
+					{//the home team out scored the away team
+						return false;
+					}
+					return true;
+				
+			}
+			else //the passed team is the away team
+			{
+				if (homeScoreInning[runsIndex] > awayScoreInning[runsIndex])
+				{//the home team out scored the away team
+					return true;
+				}
+				return false;
+			}
+		}
+		return false;//the game is not complete
 	}
 }
