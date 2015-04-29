@@ -1,9 +1,19 @@
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 
 /**
  * 
@@ -178,7 +188,11 @@ public class Game
 		
 		return text;
 	}
-	
+	/**
+	 * get the inning currently being played
+	 * useful if the game is final
+	 * @return
+	 */
 	public String getInning()
 	{
 		String text = "";
@@ -197,15 +211,244 @@ public class Game
 				text = Utility.JSONValueReader(lineScoreXML, Game.currentInningKey);
 				if (Utility.JSONValueReader(lineScoreXML, Game.inningSideKey).equals("Y"))
 				{
-					text = text + "↑";
+					text = text + "top";
 				}
 				else
 				{
-					text = text + "↓";
+					text = text + "bottom";
 				}
 			}
 		}
 		return text;
+	}
+	/**
+	 * Draws a basic score
+	 * Name and score
+	 * winner is bolded
+	 * @return
+	 */
+	public JPanel drawBasicScore()
+	{
+		Font winner = new Font("",Font.BOLD,12);
+		Font loser = new Font("",Font.PLAIN,12);
+		JPanel basicScorePanel = new JPanel();
+		GridLayout grid = new GridLayout(2,1);
+		basicScorePanel.setLayout(grid);
+		//Logic to set the team names to a length of twelve chars
+		String homeName = homeTeam.getName();
+		String awayName = awayTeam.getName();
+		
+		for (int i = 0; i < 12; i++)
+		{
+			if (i == homeName.length()) //is the iterator at the length of the String?
+			{
+				homeName = homeName + " ";//add a space
+			}
+			if (i == awayName.length())
+			{
+				awayName = awayName + " ";//add a space
+			}
+		}
+		
+		//Create a label of the team name and score
+		JLabel homeLabel = new JLabel(homeName + homeScoreInning[runsIndex]);
+		JLabel awayLabel = new JLabel(awayName + awayScoreInning[runsIndex]);
+		//Determine winner (or leader, if tied, no bold)
+		if (homeScoreInning[runsIndex]>awayScoreInning[runsIndex])
+		{
+			homeLabel.setFont(winner);
+			awayLabel.setFont(loser);
+		}
+		if (homeScoreInning[runsIndex]<awayScoreInning[runsIndex])
+		{
+			awayLabel.setFont(winner);
+			homeLabel.setFont(loser);
+		}
+		basicScorePanel.add(awayLabel);
+		basicScorePanel.add(homeLabel);
+		
+		basicScorePanel.setSize(100, 30);
+		
+		return basicScorePanel;
+	}	/**
+	 * Gives a detailed description of the game
+	 * TODO a batting list
+	 * @return
+	 */
+	public JPanel drawDetailed()
+	{
+		JPanel detailedGame = new JPanel();
+		GridLayout layout = new GridLayout(2,1);//currently two objects will exist on the Panel
+		detailedGame.setLayout(layout);
+		detailedGame.add(this.drawLogoBar());//adds the logo bar
+		detailedGame.add(this.drawLineScore());//adds the line score
+		detailedGame.setToolTipText(this.venue);//the toolTip describes the park the game is being played at
+		
+		return detailedGame;
+	}
+	
+	/**
+	 * Creates a logo JPanel
+	 * 1x3 grid displaying both logos and a description of the game
+	 */
+	private JPanel drawLogoBar()
+	{
+		JPanel logoBar = new JPanel();
+		GridLayout logoSpliter = new GridLayout(1,3);
+		logoBar.setLayout(logoSpliter);
+		
+		JLabel description = new JLabel(awayTeam.getCity() + " " + awayTeam.getName() +" at the " + homeTeam.getCity() + " " + homeTeam.getName());
+		JLabel homeTeamLogo = new JLabel(homeTeam.getLogo());
+		JLabel awayTeamLogo = new JLabel(awayTeam.getLogo());
+		
+		logoBar.add(awayTeamLogo);
+		logoBar.add(description);
+		logoBar.add(homeTeamLogo);
+		
+		return logoBar;
+	}
+
+	/**
+	 * Draws a line Score
+	 * @param currentGame the game which is to be drawn
+	 * @return a JScroll with the line score
+	 */
+	private JScrollPane drawLineScore()
+	{
+		final int AWAY =0;
+		final int HOME = 1;
+		final int NAME = 0;
+		JTable lineTable;
+		String[] tableLabels = new String[14];
+		tableLabels[NAME] = "Teams";
+		tableLabels[tableLabels.length - 3] = "R";
+		tableLabels[tableLabels.length - 2] = "H";
+		tableLabels[tableLabels.length - 1] = "E";
+		
+		//Sets the innings labels
+		for (int i = 1; i <= 10; i++)
+		{
+			tableLabels[i] = ((i) +"");
+		}
+		
+		Object[][] data = new Object[2][tableLabels.length];
+		
+		//Create away and home team data
+		data[AWAY][NAME] = this.awayTeam.getCity() + " " + this.awayTeam.getName();
+		data[HOME][NAME] = this.homeTeam.getCity() + " " + this.homeTeam.getName();
+		
+		for (int i = 0; i < homeScoreInning.length; i++)
+		{
+			data[AWAY][i + tableLabels.length - awayScoreInning.length] = awayScoreInning[i];//places the inning data in the correct data array cell
+			data[HOME][i + tableLabels.length - homeScoreInning.length] = homeScoreInning[i];
+		}
+		
+		
+		
+		//Create a JTable of data with headers tableLabels
+		lineTable = new JTable(data, tableLabels);
+		//set the preferred width of the columns to the variable width
+		int width = 20;
+		TableColumn tempCol = null;
+		for (int i = 0; i < data[0].length; i++)
+		{
+			tempCol = lineTable.getColumnModel().getColumn(i);//gets the column i
+			tempCol.setPreferredWidth(width);
+			tempCol.setResizable(false);//set the column so it cannot be resized
+			
+		}
+		//set the column of the team name to a size that can fit the name (four times the normal width)
+		lineTable.getColumnModel().getColumn(NAME).setPreferredWidth(width * 8);
+		
+		JScrollPane scroll = new JScrollPane(lineTable);
+		scroll.setSize(500, 100);
+		return scroll;
+		/*
+		JPanel homePanel = new JPanel();
+		JPanel awayPanel = new JPanel();
+		
+		//A 3x1 gridlayout of a flow panel
+		//the flow houses the individual game
+		GridLayout combinedLineLayout = new GridLayout(3,2);
+		FlowLayout homeLineLayout = new FlowLayout();
+		FlowLayout awayLineLayout = new FlowLayout();
+		
+		homePanel.setLayout(homeLineLayout);
+		awayPanel.setLayout(awayLineLayout);
+		basicScore.setLayout(combinedLineLayout);
+		
+		Icon homeLogo = this.getHomeTeam().getLogo();
+		Icon awayLogo = this.getAwayTeam().getLogo();
+		
+		
+		int[] combinedLine = this.getLine();//gets the line from the Game
+		
+		String homeTeamScores = "";
+		String awayTeamScores = "";
+		String lineScoreTopLine = "                                   1  2  3  4  5  6  7  8  9 10 R  H  E";
+		
+		//Set lineScore data
+		
+		for (int i = 0; i < combinedLine.length / 2; i++)
+		{//go through the array totally by using two seperate halves
+			int tempScore = combinedLine[i];
+			awayTeamScores = awayTeamScores + combinedLine[i];
+			if (tempScore < 10)//the score is a single digit
+			{
+				awayTeamScores = awayTeamScores + "  ";
+				//needs a space to even it out with double digits
+			}
+			//awayTeam info is first, homeTeam follows i + half of array length
+			tempScore = combinedLine[i + combinedLine.length / 2];
+			homeTeamScores = homeTeamScores + combinedLine[i + combinedLine.length / 2];
+			if (tempScore < 10)//the score is a single digit
+			{
+				homeTeamScores = homeTeamScores + "  ";
+				//needs a space to even it out with double digits
+			}
+		}
+		
+		String homeTeamString = this.getHomeTeam().getCity() + " "+ this.getHomeTeam().getName();
+		String awayTeamString = this.getAwayTeam().getCity() + " "+ this.getAwayTeam().getName();
+		
+		//Make the strings of equal length. The Phillies have the longest name
+		//at 21 characters
+		
+		for (int i = homeTeamString.length(); i < "Philidelphia Phillies".length(); i++)
+		{
+			homeTeamString = homeTeamString + " ";//add a blank to the end
+		}
+		for (int i = awayTeamString.length(); i < "Philidelphia Phillies".length(); i++)
+		{
+			awayTeamString = awayTeamString + " ";
+		}
+		awayTeamString = awayTeamString + "\t";
+		homeTeamString = homeTeamString + "\t";
+		//makes a label of the top line
+		JLabel innings = new JLabel(lineScoreTopLine);
+		//the two lines below make a label of the line of a team by combining their name and score.
+		//attaches logo to the front
+		JLabel homeTeamLabel = new JLabel( homeTeamString + " " + homeTeamScores);
+		JLabel awayTeamLabel = new JLabel(awayTeamString + " " + awayTeamScores);
+		
+		JLabel awayLogoLabel = new JLabel(awayLogo);
+		JLabel homeLogoLabel = new JLabel(homeLogo);
+		//Basic Score tooltip displays park
+		basicScore.setToolTipText(this.getVenue());
+		
+		homePanel.add(homeTeamLabel);//adds the home Team Label to the panel
+		awayPanel.add(awayTeamLabel);//same as above for away Team
+		
+		
+		//TODO turn this into a table
+		basicScore.add(new JLabel());
+		basicScore.add(innings);
+		basicScore.add(awayLogoLabel);
+		basicScore.add(awayTeamLabel);
+		basicScore.add(homeLogoLabel);
+		basicScore.add(homeTeamLabel);
+		
+		*/
 	}
 	/**
 	 * Is the game between two American league teams?

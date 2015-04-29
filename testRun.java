@@ -27,11 +27,11 @@ public class testRun extends JFrame {
 	}
 
 	public void init() {
-		GameDay testGames = new GameDay(2015, 06, 23);
+		GameDay testGames = new GameDay(2015, 04, 23);
 		System.out.println(testGames.toString());
 		List<Game> gameList = testGames.getGames();
-		JPanel lineTest = Utility.drawLineScore(gameList.get(0));
-		this.setSize(500, 500);
+		JPanel lineTest = gameList.get(0).drawDetailed();
+		//this.setSize(500, 500);
 		this.add(lineTest);
 		this.setVisible(true);
 	}
