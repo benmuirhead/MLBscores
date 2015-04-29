@@ -1,5 +1,4 @@
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -20,7 +19,7 @@ public class testRun extends JFrame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		testRun test = new testRun();
+		new testRun();
 	}
 
 	public testRun() {

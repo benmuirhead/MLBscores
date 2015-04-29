@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.swing.JPanel;
-
 
 public class GameRange {
 	private String baseAddress = "http://gd2.mlb.com/components/game/mlb/";

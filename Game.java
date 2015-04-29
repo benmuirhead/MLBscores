@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
