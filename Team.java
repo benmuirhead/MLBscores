@@ -25,7 +25,7 @@ public class Team
 	public static final String indians = "cle";
 	public static final String rockies = "col";
 	public static final String tigers = "det";
-	public static final String astros = "royals";
+	public static final String astros = "hou";
 	public static final String dodgers = "lan";
 	public static final String marlins = "mia";
 	public static final String brewers = "mil";
@@ -84,6 +84,11 @@ public class Team
 			league = "American League";
 		}
 	}
+	/**
+	 * Binary search
+	 * @param abv
+	 * @return
+	 */
 	private static int findIndexOfAbbreviation(String abv)
 	{
 		int index = abbreviationKey.length;

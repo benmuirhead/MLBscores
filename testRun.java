@@ -34,9 +34,9 @@ public class testRun extends JFrame {
 		//JPanel lineTest = gameList.get(0).drawDetailed();
 		
 		
-		Calendar startDate = Utility.convertDateToCalendar(2015, 4, 1);
-		Calendar endDate = Utility.convertDateToCalendar(2015, 4, 28);
-		String team = "ana";
+		Calendar startDate = Utility.convertDateToCalendar(2015, 4,15);
+		Calendar endDate = Utility.convertDateToCalendar(2015, 4, 20);
+		String team = Team.angels;
 		
 		
 		
@@ -47,7 +47,8 @@ public class testRun extends JFrame {
 		
 		
 		
-		//this.setSize(500, 500);
+		this.setSize(500, 500);
+		this.setResizable(false);
 		this.add(lineTest);
 		this.setVisible(true);
 	}

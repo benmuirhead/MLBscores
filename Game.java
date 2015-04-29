@@ -66,7 +66,7 @@ public class Game
 		}
 		catch(MalformedURLException e)
 		{
-			
+			System.out.println("error in Game constructor");
 		}
 		createTeams();
 		getLineScore();
