@@ -25,8 +25,15 @@ public class GameDay
 	/**
 	 * Create the address of the games base file based on the passed parameters
 	 */
-	public GameDay(int year, int month, int day) 
+	public GameDay(Calendar c) 
 	{
+		//convert the calendar c to day, month, year
+		int day, month,year;
+		day = c.get(Calendar.DAY_OF_MONTH);
+		month = c.get(Calendar.MONTH);
+		year = c.get(Calendar.YEAR);
+		
+		
 		myHTML="";
 		//add the year to the address
 		address = address + "year_" + year + "/";
