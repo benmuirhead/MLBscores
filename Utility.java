@@ -1,6 +1,7 @@
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -50,6 +51,16 @@ public class Utility
 		int day = c.get(Calendar.DAY_OF_MONTH);
 		
 		return new int[]{year,month,day};
+	}
+	public static Calendar convertDateToCalendar(int year, int month, int day)
+	{
+		Calendar date = new GregorianCalendar();
+		
+		date.set(Calendar.DAY_OF_MONTH, day);
+		date.set(Calendar.MONTH, month);
+		date.set(Calendar.YEAR, year);
+		
+		return date;
 	}
 	public static Calendar nextDay(Calendar c)
 	{

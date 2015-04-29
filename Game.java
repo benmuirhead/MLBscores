@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -46,6 +48,8 @@ public class Game
 	private final static String inningSideKey = "top_key";
 	private final static String locationKey = "venue";
 	
+	private Calendar myDate;
+	
 	public final int runsIndex = 10;
 	public final int hitsIndex = runsIndex + 1;
 	public final int errorsIndex = runsIndex + 2;
@@ -68,6 +72,7 @@ public class Game
 		createTeams();
 		getLineScore();
 		fixVenue();
+		setDate();
 	}
 	/**
 	 * Creates the teams based on the URL
@@ -226,6 +231,56 @@ public class Game
 	 * winner is bolded
 	 * @return
 	 */
+	public JPanel drawBasicScoreWithDate()
+	{
+		JLabel dateLabel = new JLabel(myDate.get(Calendar.MONTH) + "/" + myDate.get(Calendar.DAY_OF_MONTH) +"/" + myDate.get(Calendar.YEAR));
+		
+		
+		Font winner = new Font("",Font.BOLD,12);
+		Font loser = new Font("",Font.PLAIN,12);
+		JPanel basicScorePanel = new JPanel();
+		GridLayout grid = new GridLayout(3,1);
+		basicScorePanel.setLayout(grid);
+		
+		basicScorePanel.add(dateLabel);
+		
+		//Logic to set the team names to a length of twelve chars
+		String homeName = homeTeam.getName();
+		String awayName = awayTeam.getName();
+		
+		for (int i = 0; i < 12; i++)
+		{
+			if (i == homeName.length()) //is the iterator at the length of the String?
+			{
+				homeName = homeName + " ";//add a space
+			}
+			if (i == awayName.length())
+			{
+				awayName = awayName + " ";//add a space
+			}
+		}
+		
+		//Create a label of the team name and score
+		JLabel homeLabel = new JLabel(homeName + homeScoreInning[runsIndex]);
+		JLabel awayLabel = new JLabel(awayName + awayScoreInning[runsIndex]);
+		//Determine winner (or leader, if tied, no bold)
+		if (homeScoreInning[runsIndex]>awayScoreInning[runsIndex])
+		{
+			homeLabel.setFont(winner);
+			awayLabel.setFont(loser);
+		}
+		if (homeScoreInning[runsIndex]<awayScoreInning[runsIndex])
+		{
+			awayLabel.setFont(winner);
+			homeLabel.setFont(loser);
+		}
+		basicScorePanel.add(awayLabel);
+		basicScorePanel.add(homeLabel);
+		
+		basicScorePanel.setSize(100, 30);
+		
+		return basicScorePanel;
+	}
 	public JPanel drawBasicScore()
 	{
 		Font winner = new Font("",Font.BOLD,12);
@@ -269,7 +324,8 @@ public class Game
 		basicScorePanel.setSize(100, 30);
 		
 		return basicScorePanel;
-	}	/**
+	}
+	/**
 	 * Gives a detailed description of the game
 	 * TODO a batting list
 	 * @return
@@ -472,6 +528,31 @@ public class Game
 	{
 		return !(isNationalLeague() || isAmericanLeague());
 	}
+	
+	private void setDate()
+	{
+		String year = "year_";
+		String month = "month_";
+		String day = "day_";
+		String temp;
+		int index;
+		int tempNum;
+		myDate = new GregorianCalendar();
+		temp = base.toString();//sets the URL to temp
+		
+		index = temp.indexOf(year) + year.length();
+		tempNum = Integer.parseInt(temp.substring(index, index + 4));
+		myDate.set(Calendar.YEAR, tempNum);
+		
+		index = temp.indexOf(month) + month.length();
+		tempNum = Integer.parseInt(temp.substring(index, index + 2));
+		myDate.set(Calendar.MONTH, tempNum);
+		
+		index = temp.indexOf(day) + day.length();
+		tempNum = Integer.parseInt(temp.substring(index, index + 2));
+		myDate.set(Calendar.DAY_OF_MONTH, tempNum);
+	}
+	
 	/**
 	 * Takes the location of the game
 	 * IE Fenway Park
