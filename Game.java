@@ -355,6 +355,64 @@ public class Game {
 		return basicScorePanel;
 	}
 
+	public JPanel drawBasicScoreWithLogos() {
+		// the fonts the winners and losers will use
+		Font winner = new Font("", Font.BOLD, 16);
+		Font loser = new Font("", Font.PLAIN, 16);
+
+		JPanel basicScorePanel = new JPanel();
+		GridLayout grid = new GridLayout(2, 2);
+		basicScorePanel.setLayout(grid);
+		// Logic to set the team names to a length of twelve chars
+		String homeName = homeTeam.getName();
+		String awayName = awayTeam.getName();
+
+		for (int i = 0; i < 13; i++) {
+			if (i == homeName.length()) // is the iterator at the length of the
+										// String?
+			{
+				homeName = homeName + " ";// add a space
+			}
+			if (i == awayName.length()) {
+				awayName = awayName + " ";// add a space
+			}
+		}
+
+		// Create a label of the team name and score
+		JLabel homeLabel = new JLabel(homeName + homeScoreInning[runsIndex]);
+		JLabel awayLabel = new JLabel(awayName + awayScoreInning[runsIndex]);
+		// Determine winner (or leader, if tied, no bold) and bold the winner's
+		// text
+		if (homeScoreInning[runsIndex] > awayScoreInning[runsIndex]) {
+			homeLabel.setFont(winner);
+			awayLabel.setFont(loser);
+		}
+		if (homeScoreInning[runsIndex] < awayScoreInning[runsIndex]) {
+			awayLabel.setFont(winner);
+			homeLabel.setFont(loser);
+		}
+		// creat logo to add in front of team name
+		JLabel homeTeamLogo = new JLabel(homeTeam.getLogo());
+		JLabel awayTeamLogo = new JLabel(awayTeam.getLogo());
+		// homeTeamLogo.setPreferredSize(new Dimension(100,100));
+		// awayTeamLogo.setPreferredSize(new Dimension(50,100));
+
+		// add the created labels and logos back to the panel
+		basicScorePanel.add(awayTeamLogo);
+		basicScorePanel.add(awayLabel);
+		basicScorePanel.add(homeTeamLogo);
+		basicScorePanel.add(homeLabel);
+		basicScorePanel.setName(gameURL);
+		basicScorePanel.setSize(85, 30);// give the panel an arbitaray size
+		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));// put
+																				// a
+																				// border
+																				// around
+																				// the
+																				// panel
+		return basicScorePanel;
+	}
+
 	/**
 	 * Gives a detailed description of the game
 	 * TODO a batting list
