@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -45,10 +46,22 @@ public class Gui extends JFrame {
 	// static JFrame MLBFrame;
 	static JPanel scoresPanel;
 	static JPanel gamePanel;
+	static JPanel ddPanel;
+	public static JComboBox<String> dayDropdown;
+	public static JComboBox<String> monthDropdown;
+	public static JComboBox<String> yearDropdown;
+	String[] days = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
+			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
+			"23", "24", "25", "26", "27", "28", "29", "30", "31" };
+	String[] months = { "Jan", "Feb", "March", "Apr", "May", "Jun", "Jul",
+			"Aug", "Sep", "Oct", "Nov", "Dec" };
+	String[] years = { "2015", "2014", "2013", "2012", "2011", "2010" };
 
+	JButton goButton;
 	GameDay selectedGameDay = new GameDay(date);
+
 	// System.out.println("GameDay 1 created");
-	//GameDay selectedGameDay2 = new GameDay(date2);
+	// GameDay selectedGameDay2 = new GameDay(date2);
 
 	// System.out.println("GameDay 2 created");
 	// System.out.println("GameDay made");
@@ -75,14 +88,14 @@ public class Gui extends JFrame {
 		//
 		// }
 		// create 3 panels that live on MLBFrame
-		JPanel dropdownPanel = dropdownPanel();
-		scoresPanel = scoresPanel(selectedGameDay);
+		ddPanel = dropdownPanel();
+		scoresPanel = scoresPanel(date);
 		gamePanel = gamePanel();
 
 		this.setBounds(0, 0, windowX, windowY);
 		this.getContentPane().setBounds(0, 0, windowX, windowY);
 
-		this.getContentPane().add(dropdownPanel);
+		this.getContentPane().add(ddPanel);
 		this.getContentPane().add(scoresPanel);
 		this.getContentPane().add(gamePanel);
 		this.getContentPane().setLayout(
@@ -96,7 +109,7 @@ public class Gui extends JFrame {
 		// gPanel.setBounds(0, 500, windowX, gamePanelHeight);
 		gPanel.setBounds(0, 200, 300, 100);
 		// gamePanel.setSize(windowX, gamePanelHeight);
-		String[] dates = { "April 1, 2015", "April 2, 2015", "April 3, 2015",
+		String[] dates = { "April 1, 2015", "July 2, 2015", "April 3, 2015",
 				"April 4, 2015" };
 		JComboBox<String> defaultDropdown = new JComboBox<String>(dates);
 
@@ -107,16 +120,29 @@ public class Gui extends JFrame {
 		return gPanel;
 	}
 
+	/**
+	 * 
+	 * Holds 3 ComboBoxes, for Day, Month, and Year
+	 * @return ddPanel
+	 */
 	public JPanel dropdownPanel() {
-		JPanel ddPanel = new JPanel();
+		ddPanel = new JPanel();
 		// ddPanel.setSize(windowX, ddPanelHeight);
 		ddPanel.setBounds(0, 0, windowX, ddPanelHeight);
-		String[] dates = { "April 1, 2015", "April 2, 2015", "April 3, 2015",
-				"April 4, 2015" };
-		JComboBox<String> dropdown = new JComboBox<String>(dates);
 
-		dropdown.addActionListener(new dropdownListener(this));
-		ddPanel.add(dropdown);
+		dayDropdown = new JComboBox<String>(days);
+		monthDropdown = new JComboBox<String>(months);
+		yearDropdown = new JComboBox<String>(years);
+
+		goButton = new JButton("Go");
+		goButton.addActionListener(new buttonListener(this));
+
+		// dropdown.addActionListener(new dropdownListener(this));
+		ddPanel.add(dayDropdown);
+		ddPanel.add(monthDropdown);
+		ddPanel.add(yearDropdown);
+		ddPanel.add(goButton);
+		
 		ddPanel.setBorder(BorderFactory.createLineBorder(Color.green));
 		return ddPanel;
 	}
@@ -126,8 +152,8 @@ public class Gui extends JFrame {
 	 * AL, NL and Interleague
 	 * @param date 
 	 */
-	public JPanel scoresPanel(GameDay selectedGameDay4) {
-		selectedGameDay = selectedGameDay4;
+	public JPanel scoresPanel(Calendar inputDate) {
+		// selectedGameDay = selectedGameDay4;
 		System.out.println("sP()");
 		System.out.println("sP:" + Utility.convertCalendarToDate(date)[1] + "/"
 				+ Utility.convertCalendarToDate(date)[2] + "/"
@@ -136,8 +162,8 @@ public class Gui extends JFrame {
 		// TODO connect to dropdown
 		System.out.println("scorePanel made");
 
-		// GameDay selectedGameDay = new GameDay(inputDate);
-//		System.out.println("GameDay created");
+		GameDay selectedGameDay = new GameDay(inputDate);
+		// System.out.println("GameDay created");
 		// if (date2 == inputDate){
 		// System.out.println("date==inputDate");
 		// selectedGameDay=selectedGameDay2;
@@ -212,8 +238,35 @@ public class Gui extends JFrame {
 		scoresPanel = null;
 
 		// Program crashes here, takes to long to get???
-		 GameDay selectedGameDay3 = new GameDay(date);
-		scoresPanel = scoresPanel(selectedGameDay3);
+		GameDay selectedGameDay3 = new GameDay(date);
+		scoresPanel = scoresPanel(date);
+
+		this.getContentPane().add(scoresPanel);
+		this.getContentPane().add(gamePanel);
+		this.getContentPane().revalidate();
+		// this.getContentPane().repaint();
+		this.getContentPane().setVisible(true);
+	}
+
+	public void buttonPressed() {
+		System.out.println("Go Button Pressed");
+		int day = Gui.dayDropdown.getSelectedIndex()+1;
+		int month = Gui.monthDropdown.getSelectedIndex()+1;
+		int year = 2015 - Gui.yearDropdown.getSelectedIndex();
+
+		Calendar newDate = Utility.convertDateToCalendar(year, month, day);
+		date = newDate;
+
+		System.out.println("ButtonPressed:" + Utility.convertCalendarToDate(date)[1] + "/"
+				+ Utility.convertCalendarToDate(date)[2] + "/"
+				+ Utility.convertCalendarToDate(date)[0]);
+		this.getContentPane().remove(scoresPanel);
+		this.getContentPane().remove(gamePanel);
+		scoresPanel = null;
+
+		// Program crashes here, takes to long to get???
+		// GameDay selectedGameDay3 = new GameDay(date);
+		scoresPanel = scoresPanel(date);
 
 		this.getContentPane().add(scoresPanel);
 		this.getContentPane().add(gamePanel);

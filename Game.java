@@ -61,6 +61,8 @@ public class Game {
 	 * Then contructor delegates to other methods
 	 */
 	public Game(String gameURL) {
+		System.out.println();
+		System.out.print("    Creating Game");
 		try {
 			base = new URL(gameURL);
 			lineScoreURL = new URL(gameURL + "linescore.xml");
@@ -68,13 +70,9 @@ public class Game {
 			System.out.println("error in Game constructor");
 		}
 		createTeams();
-		System.out.print("  createTeams() done");
 		getLineScore();
-		System.out.print("  getLineScore() done");
 		fixVenue();
-		System.out.print("  fixVenue() done");
 		setDate();
-		System.out.print("  setDate() done");
 
 	}
 
@@ -82,24 +80,24 @@ public class Game {
 	 * Creates the teams based on the URL
 	 */
 	private void createTeams() {
-		System.out.print("  begin createTeams");
+		System.out.print("  begin createTeams()");
 		int indexAway = 80;// all urls are the same so a static location can be
 							// used
 		int indexHome = indexAway + 7;
 		int length = 3;
 		System.out.println();
-		System.out.print("  begin awayTeam:  ");
 		
+		System.out.print("      base:  " + base);
 		System.out.print(base.toString().substring(indexAway,
 				indexAway + length));
 		System.out.println();
-		System.out.println("base:  "+base);
+		System.out.print("      begin awayTeam:  ");
 		awayTeam = new Team(base.toString().substring(indexAway,
 				indexAway + length));
-		System.out.println("  awayTeam made");
-		
+		System.out.print("  awayTeam made");
+
 		System.out.println();
-		System.out.print("  begin homeTeam:  ");
+		System.out.print("      begin homeTeam:  ");
 		System.out.print(base.toString().substring(indexHome,
 				indexHome + length));
 		homeTeam = new Team(base.toString().substring(indexHome,
