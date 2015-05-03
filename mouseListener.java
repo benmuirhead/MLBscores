@@ -1,6 +1,8 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JPanel;
+
 public class mouseListener implements MouseListener {
 
 	private Gui Gui;
@@ -10,10 +12,15 @@ public class mouseListener implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		Game newGame = null;
+		Game newGame;
+		JPanel source = (JPanel) e.getSource();
+		String gameURL = source.getName();
+		System.out.println(gameURL);
+		newGame = new Game(gameURL);
 		Gui.newDetailGame(newGame);
+		
 	}
 
 	@Override

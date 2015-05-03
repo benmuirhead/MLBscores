@@ -10,7 +10,7 @@ public class buttonListener implements ActionListener {
 
 	public buttonListener(Gui testGui) {
 		this.Gui = testGui;
-		this.b1 = Gui.goButton;
+		//this.b1 = Gui.goButton;
 	}
 
 	@Override

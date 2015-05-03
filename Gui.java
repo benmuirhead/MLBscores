@@ -184,10 +184,12 @@ public class Gui extends JFrame {
 
 		GridLayout grid = new GridLayout(Math.max(selectedALGames.size(),
 				Math.max(selectedNLGames.size(), selectedInterGames.size())), 1);
-
+		JPanel newGamePanel;
 		// AL
 		for (Game g : selectedALGames) {
-			ALGamesP.add(g.drawBasicScore());
+			newGamePanel = g.drawBasicScore();
+			newGamePanel.addMouseListener(new mouseListener(this));
+			ALGamesP.add(newGamePanel);
 		}
 		for (JPanel panel : ALGamesP) {
 			ALPanel.add(panel);
@@ -198,7 +200,9 @@ public class Gui extends JFrame {
 
 		// NL
 		for (Game g : selectedNLGames) {
-			NLGamesP.add(g.drawBasicScore());
+			newGamePanel = g.drawBasicScore();
+			newGamePanel.addMouseListener(new mouseListener(this));
+			NLGamesP.add(newGamePanel);
 		}
 		for (JPanel panel : NLGamesP) {
 			NLPanel.add(panel);
@@ -209,7 +213,9 @@ public class Gui extends JFrame {
 
 		// Interleague
 		for (Game g : selectedInterGames) {
-			interGamesP.add(g.drawBasicScore());
+			newGamePanel = g.drawBasicScore();
+			newGamePanel.addMouseListener(new mouseListener(this));
+			interGamesP.add(newGamePanel);
 		}
 		for (JPanel panel : interGamesP) {
 			interPanel.add(panel);
@@ -250,6 +256,16 @@ public class Gui extends JFrame {
 		scoresPanel = scoresPanel(date);
 
 		this.getContentPane().add(scoresPanel);
+		this.getContentPane().add(gamePanel);
+		this.getContentPane().revalidate();
+		this.getContentPane().setVisible(true);
+	}
+	
+	
+	public void newDetailGame(Game newGame){
+		System.out.println("new Game Selected");
+		this.getContentPane().remove(gamePanel);
+		gamePanel=gamePanel(newGame);
 		this.getContentPane().add(gamePanel);
 		this.getContentPane().revalidate();
 		this.getContentPane().setVisible(true);

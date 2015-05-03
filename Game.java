@@ -37,6 +37,7 @@ public class Game {
 	private URL lineScoreURL;
 	private String lineScoreXML;
 	private String venue;
+	private String gameURL;
 
 	private final static String homeInningKey = "home_inning_runs";
 	private final static String awayInningKey = "away_inning_runs";
@@ -62,6 +63,7 @@ public class Game {
 	 * Then contructor delegates to other methods
 	 */
 	public Game(String gameURL) {
+		this.gameURL = gameURL;
 		System.out.println();
 		System.out.print("    Creating Game");
 		try {
@@ -342,7 +344,7 @@ public class Game {
 		basicScorePanel.add(awayLabel);// add the created score labels to the
 										// panel
 		basicScorePanel.add(homeLabel);
-
+		basicScorePanel.setName(gameURL);
 		basicScorePanel.setSize(85, 30);// give the panel an arbitaray size
 		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));// put
 																				// a
@@ -391,7 +393,7 @@ public class Game {
 		logoBar.add(description);
 		logoBar.add(homeTeamLogo);
 		logoBar.setBorder(BorderFactory.createLineBorder(Color.green));
-		logoBar.setMaximumSize(new Dimension(1000,500));
+		logoBar.setMaximumSize(new Dimension(1000, 500));
 		return logoBar;
 	}
 
@@ -456,10 +458,10 @@ public class Game {
 		lineTable.getColumnModel().getColumn(NAME).setPreferredWidth(width * 8);
 
 		JScrollPane scroll = new JScrollPane(lineTable);
-		//scroll.setSize(500, 100);
+		// scroll.setSize(500, 100);
 		scroll.setBorder(BorderFactory.createLineBorder(Color.red));
-		
-		scroll.setPreferredSize(new Dimension(500,100));
+
+		scroll.setPreferredSize(new Dimension(500, 100));
 		return scroll;
 		/*
 		 * JPanel homePanel = new JPanel(); JPanel awayPanel = new JPanel();
