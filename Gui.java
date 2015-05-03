@@ -48,7 +48,7 @@ public class Gui extends JFrame {
 
 	GameDay selectedGameDay = new GameDay(date);
 	// System.out.println("GameDay 1 created");
-	GameDay selectedGameDay2 = new GameDay(date2);
+	//GameDay selectedGameDay2 = new GameDay(date2);
 
 	// System.out.println("GameDay 2 created");
 	// System.out.println("GameDay made");
@@ -85,12 +85,8 @@ public class Gui extends JFrame {
 		this.getContentPane().add(dropdownPanel);
 		this.getContentPane().add(scoresPanel);
 		this.getContentPane().add(gamePanel);
-		// GridLayout contentPaneGrid = new GridLayout(3, 1);
 		this.getContentPane().setLayout(
 				new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-		// this.getContentPane().setLayout(contentPaneGrid);
-		// MLBFrame.setVisible(true);
-		// this.add(MLBFrame);
 		this.setVisible(true);
 
 	}
@@ -141,7 +137,7 @@ public class Gui extends JFrame {
 		System.out.println("scorePanel made");
 
 		// GameDay selectedGameDay = new GameDay(inputDate);
-		System.out.println("GameDay created");
+//		System.out.println("GameDay created");
 		// if (date2 == inputDate){
 		// System.out.println("date==inputDate");
 		// selectedGameDay=selectedGameDay2;

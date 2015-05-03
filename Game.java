@@ -61,13 +61,9 @@ public class Game {
 	 * Then contructor delegates to other methods
 	 */
 	public Game(String gameURL) {
-		System.out.print("      begin creating game");
 		try {
-			System.out.print("  try");
 			base = new URL(gameURL);
-			System.out.print("  base made");
 			lineScoreURL = new URL(gameURL + "linescore.xml");
-			System.out.println("  lineScoreURl made");
 		} catch (MalformedURLException e) {
 			System.out.println("error in Game constructor");
 		}
@@ -91,12 +87,21 @@ public class Game {
 							// used
 		int indexHome = indexAway + 7;
 		int length = 3;
-		System.out.println("  begin awayTeam");
-		System.out.println(base.toString().substring(indexAway,
+		System.out.println();
+		System.out.print("  begin awayTeam:  ");
+		
+		System.out.print(base.toString().substring(indexAway,
 				indexAway + length));
+		System.out.println();
+		System.out.println("base:  "+base);
 		awayTeam = new Team(base.toString().substring(indexAway,
 				indexAway + length));
-		System.out.print("  awayTeam made");
+		System.out.println("  awayTeam made");
+		
+		System.out.println();
+		System.out.print("  begin homeTeam:  ");
+		System.out.print(base.toString().substring(indexHome,
+				indexHome + length));
 		homeTeam = new Team(base.toString().substring(indexHome,
 				indexHome + length));
 		System.out.println("  homeTeam made");
