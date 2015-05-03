@@ -282,7 +282,7 @@ public class Game
 		basicScorePanel.add(awayLabel);//add the labels
 		basicScorePanel.add(homeLabel);
 		
-		basicScorePanel.setSize(85, 30);//give the panel n arbbitrary size
+		basicScorePanel.setSize(85, 30);//give the panel n arbitrary size
 		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));//put a border around the panel
 		return basicScorePanel;
 	}
