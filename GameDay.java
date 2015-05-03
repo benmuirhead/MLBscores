@@ -27,7 +27,7 @@ public class GameDay
 	 */
 	public GameDay(Calendar c) 
 	{
-		//convert the calendar c to day, month, year
+		System.out.println("Begin GameDay");//convert the calendar c to day, month, year
 		int day, month,year;
 		day = c.get(Calendar.DAY_OF_MONTH);
 		month = c.get(Calendar.MONTH);
@@ -58,6 +58,7 @@ public class GameDay
 		getHTML();//get the HTML of the game day info
 		findGames(); //find the games from HTML
 		createGameObjects(); //create objects of games
+		System.out.println("GameDay "+month+"/"+day+"/"+year+" created");
 	}
 	/**
 	 * Get the HTML base file for the given date

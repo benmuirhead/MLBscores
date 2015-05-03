@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -35,17 +36,24 @@ public class Gui extends JFrame {
 	private static int windowY = 1000;
 
 	private static int ddPanelHeight = 100;
+	private static int gamePanelHeight = 100;
 	public static String selectedDate;
 	static Calendar date = Utility.convertDateToCalendar(2015, 4, 20);
+	static Calendar date2 = Utility.convertDateToCalendar(2015, 4, 21);
 
+	GameDay[] AprilGames;
 	// static JFrame MLBFrame;
 	static JPanel scoresPanel;
-	
+	static JPanel gamePanel;
+
 	GameDay selectedGameDay = new GameDay(date);
-	//System.out.println("GameDay made");
-	
+	// System.out.println("GameDay 1 created");
+	GameDay selectedGameDay2 = new GameDay(date2);
+
+	// System.out.println("GameDay 2 created");
+	// System.out.println("GameDay made");
+
 	public Gui() {
-		// MLBFrame = new JFrame();
 		System.out.println("Gui()");
 		this.init();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,54 +64,89 @@ public class Gui extends JFrame {
 		System.out.println("init()");
 
 		this.setTitle("MLB Scores");
+		for (int i = 1; i < 10; i++) {
+			Calendar currentDate = Utility.convertDateToCalendar(2015, 3, i);
+			System.out.println("CurrentDate:"
+					+ Utility.convertCalendarToDate(currentDate)[1] + "/"
+					+ Utility.convertCalendarToDate(currentDate)[2] + "/"
+					+ Utility.convertCalendarToDate(currentDate)[0]);
+			// GameDay newGameDay = new GameDay(currentDate);
+			// AprilGames[i] = newGameDay;
 
+		}
 		// create 3 panels that live on MLBFrame
 		JPanel dropdownPanel = dropdownPanel();
-		scoresPanel = scoresPanel(date);
-		JPanel gamePanel = new JPanel();
+		scoresPanel = scoresPanel(selectedGameDay);
+		gamePanel = gamePanel();
 
 		this.setBounds(0, 0, windowX, windowY);
+		this.getContentPane().setBounds(0, 0, windowX, windowY);
 
 		this.getContentPane().add(dropdownPanel);
-		
-		this.getContentPane().add(gamePanel);
 		this.getContentPane().add(scoresPanel);
-
+		this.getContentPane().add(gamePanel);
+		// GridLayout contentPaneGrid = new GridLayout(3, 1);
+		this.getContentPane().setLayout(
+				new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+		// this.getContentPane().setLayout(contentPaneGrid);
 		// MLBFrame.setVisible(true);
 		// this.add(MLBFrame);
 		this.setVisible(true);
 
 	}
 
+	private JPanel gamePanel() {
+		JPanel gPanel = new JPanel();
+		// gPanel.setBounds(0, 500, windowX, gamePanelHeight);
+		gPanel.setBounds(0, 200, 300, 100);
+		// gamePanel.setSize(windowX, gamePanelHeight);
+		String[] dates = { "April 1, 2015", "April 2, 2015", "April 3, 2015",
+				"April 4, 2015" };
+		JComboBox<String> defaultDropdown = new JComboBox<String>(dates);
+
+		gPanel.add(defaultDropdown);
+
+		gPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
+
+		return gPanel;
+	}
+
 	public JPanel dropdownPanel() {
 		JPanel ddPanel = new JPanel();
-
-		ddPanel.setSize(windowX, ddPanelHeight);
-
+		// ddPanel.setSize(windowX, ddPanelHeight);
+		ddPanel.setBounds(0, 0, windowX, ddPanelHeight);
 		String[] dates = { "April 1, 2015", "April 2, 2015", "April 3, 2015",
 				"April 4, 2015" };
 		JComboBox<String> dropdown = new JComboBox<String>(dates);
 
 		dropdown.addActionListener(new dropdownListener(this));
 		ddPanel.add(dropdown);
-		ddPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		ddPanel.setBorder(BorderFactory.createLineBorder(Color.green));
 		return ddPanel;
 	}
 
 	/**
 	 * Gets Games from GameDay and displays them in three sections:
 	 * AL, NL and Interleague
-	 * @param inputDate 
+	 * @param date 
 	 */
-	public JPanel scoresPanel(Calendar inputDate) {
+	public JPanel scoresPanel(GameDay selectedGameDay4) {
+		selectedGameDay = selectedGameDay4;
 		System.out.println("sP()");
-		System.out.println("sP:" + Utility.convertCalendarToDate(inputDate)[1]
-				+ "/" + Utility.convertCalendarToDate(inputDate)[2] + "/"
-				+ Utility.convertCalendarToDate(inputDate)[0]);
+		System.out.println("sP:" + Utility.convertCalendarToDate(date)[1] + "/"
+				+ Utility.convertCalendarToDate(date)[2] + "/"
+				+ Utility.convertCalendarToDate(date)[0]);
 		JPanel scorePanel = new JPanel();
 		// TODO connect to dropdown
 		System.out.println("scorePanel made");
-		
+
+		// GameDay selectedGameDay = new GameDay(inputDate);
+		System.out.println("GameDay created");
+		// if (date2 == inputDate){
+		// System.out.println("date==inputDate");
+		// selectedGameDay=selectedGameDay2;
+		// }
+
 		// List that holds games in category
 		List<Game> selectedALGames = selectedGameDay.getAmericanGames();
 		List<Game> selectedNLGames = selectedGameDay.getNationalGames();
@@ -158,34 +201,28 @@ public class Gui extends JFrame {
 		GridLayout scoresPanelgrid = new GridLayout(1, 3);
 		scorePanel.setLayout(scoresPanelgrid);
 		scorePanel.setBounds(0, ddPanelHeight, 1000, 400);
-System.out.println("return scorePanel");
+		System.out.println("return scorePanel");
 		return scorePanel;
 	}
 
 	public void dropdownChange(Calendar cal) {
+		System.out.print("Dropdown Changed:");
 		date = cal;
 		System.out.println("dC:" + Utility.convertCalendarToDate(date)[1] + "/"
 				+ Utility.convertCalendarToDate(date)[2] + "/"
 				+ Utility.convertCalendarToDate(date)[0]);
-		// scoresPanel.revalidate(); // not working
-		// System.out.println("scoresPanel repainted");
-		// MLBFrame.revalidate();
-		// this..repaint();0
-		// Gui.MLBFrame.repaint();
-		// this.revalidate();
-		System.out.println(this);
-		// Gui.scoresPanel.revalidate();
-		this.getContentPane().remove((scoresPanel));
+		this.getContentPane().remove(scoresPanel);
+		this.getContentPane().remove(gamePanel);
 		scoresPanel = null;
-		scoresPanel = scoresPanel(date);
-		
-		// scoresPanel = new JPanel();
-		// scoresPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// scoresPanel.setBounds(0, ddPanelHeight, 1000, 400);
-		this.add(scoresPanel);
-		this.validate();
-		//this.validateTree();
-		this.repaint();
 
+		// Program crashes here, takes to long to get???
+		// GameDay selectedGameDay3 = new GameDay(date);
+		scoresPanel = scoresPanel(selectedGameDay2);
+
+		this.getContentPane().add(scoresPanel);
+		this.getContentPane().add(gamePanel);
+		this.getContentPane().revalidate();
+		// this.getContentPane().repaint();
+		this.getContentPane().setVisible(true);
 	}
 }
