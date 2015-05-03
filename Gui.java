@@ -15,13 +15,15 @@ import javax.swing.JPanel;
 
 /**
  * @author Ben
- *
+ */
+
+/**
  *This GUI will create a large JPanel that will hold all the panels, dropdowns, etc
  *Structure:
  *	JPanel windowFrame
  *		Date Dropdown
  *		All Scores Panel - refreshes each time a new date is selected
- *			Will Contain 3 sections: AL NL Interleague
+ *			Will Contain 3 sections: AL/NL/ Interleague
  *				Each Section will hold all the relevant games
  *		Indiv Game Panel - refreshes each time a new game is selected
  *			When a game is selected, it shows the full 9 inning plue RHE for each team
@@ -31,6 +33,8 @@ public class Gui {
 	// window size
 	private static int windowX = 1000;
 	private static int windowY = 1000;
+
+	private static int ddPanelHright = 100;
 
 	public Gui() {
 		init();
@@ -60,7 +64,7 @@ public class Gui {
 	public JPanel dropdownPanel() {
 		JPanel ddPanel = new JPanel();
 
-		ddPanel.setSize(windowX, 100);
+		ddPanel.setSize(windowX, ddPanelHright);
 
 		String[] dates = { "April 1, 2015", "April 2, 2015", "April 3, 2015",
 				"April 4, 2015" };
@@ -71,30 +75,75 @@ public class Gui {
 		return ddPanel;
 	}
 
+	/**
+	 * Gets Games from GameDay and displays them in three sections:
+	 * AL, NL and Interleague
+	 */
 	public JPanel scoresPanel() {
-		/**
-		 * Gets Games from Game Range?
-		 */
+
 		JPanel scoresPanel = new JPanel();
+		// TODO connect to dropdown
 		Calendar date = Utility.convertDateToCalendar(2015, 4, 20);
 
 		GameDay selectedGameDay = new GameDay(date);
-		List<Game> selectedGames = selectedGameDay.getGames();
-		List<JPanel> selectedGamesPanels = new ArrayList<JPanel>();
 
-		for (Game g : selectedGames) {
-			selectedGamesPanels.add(g.drawBasicScore());
-		}
+		// List that holds games in category
+		List<Game> selectedALGames = selectedGameDay.getAmericanGames();
+		List<Game> selectedNLGames = selectedGameDay.getNationalGames();
+		List<Game> selectedInterGames = selectedGameDay.getInterLeagueGames();
 
+		// List that holds panels in category
+		List<JPanel> ALGamesP = new ArrayList<JPanel>();
+		List<JPanel> NLGamesP = new ArrayList<JPanel>();
+		List<JPanel> interGamesP = new ArrayList<JPanel>();
+
+		// Panel that holds all game panels in category
+		JPanel ALPanel = new JPanel();
+		JPanel NLPanel = new JPanel();
+		JPanel interPanel = new JPanel();
+
+		GridLayout grid = new GridLayout(Math.max(selectedALGames.size(),
+				Math.max(selectedNLGames.size(), selectedInterGames.size())), 1);
 		
-		GridLayout grid = new GridLayout(selectedGamesPanels.size(), 1);
-		scoresPanel.setLayout(grid);
-
-		for (JPanel panel : selectedGamesPanels) {
-			scoresPanel.add(panel);
+		// AL
+		for (Game g : selectedALGames) {
+			ALGamesP.add(g.drawBasicScore());
 		}
+		for (JPanel panel : ALGamesP) {
+			ALPanel.add(panel);
+		}
+		
+		ALPanel.setLayout(grid);
+		// ALPanel.setSize(100);
+		scoresPanel.add(ALPanel);
 
-		scoresPanel.setSize(windowX, 800);
+		// NL
+		for (Game g : selectedNLGames) {
+			NLGamesP.add(g.drawBasicScore());
+		}
+		for (JPanel panel : NLGamesP) {
+			NLPanel.add(panel);
+		}
+		
+		NLPanel.setLayout(grid);
+		//NLPanel.setSize(200, 300);
+		scoresPanel.add(NLPanel);
+
+		// Interleague
+		for (Game g : selectedInterGames) {
+			interGamesP.add(g.drawBasicScore());
+		}
+		for (JPanel panel : interGamesP) {
+			interPanel.add(panel);
+		}
+		
+		interPanel.setLayout(grid);
+		scoresPanel.add(interPanel);
+
+		GridLayout scoresPanelgrid = new GridLayout(1, 3);
+		scoresPanel.setLayout(scoresPanelgrid);
+		scoresPanel.setBounds(0, ddPanelHright, 1000, 400);
+		
 
 		return scoresPanel;
 	}
