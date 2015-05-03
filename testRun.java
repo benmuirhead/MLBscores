@@ -38,10 +38,12 @@ public class testRun extends JFrame {
 		//List<Game> gameList = testGames.getGames();
 		//JPanel lineTest = gameList.get(0).drawDetailed();
 		
+		//Gui testGui = new Gui();
+		
 		
 		Calendar startDate = Utility.convertDateToCalendar(2014, 4,10);
 		Calendar endDate = Utility.convertDateToCalendar(2014, 4, 20);
-		String team = Team.angels;
+		String team = Team.mets;
 		
 		GameRange testRange = new GameRange(team,startDate,endDate);
 		List<Game> testRangeGames = testRange.getGames();
