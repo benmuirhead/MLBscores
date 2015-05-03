@@ -16,7 +16,7 @@ public class buttonListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//JButton button = (JButton) e.getSource();
-		Gui.buttonPressed();
+		Gui.goButtonPressed();
 	}
 
 }

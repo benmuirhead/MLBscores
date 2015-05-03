@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,31 +23,34 @@ import javax.swing.JPanel;
 /**
  *This GUI will create a large JPanel that will hold all the panels, dropdowns, etc
  *Structure:
- *	JPanel windowFrame
- *		Date Dropdown
+ *	JFrame Gui 
+ *		Day/Month/Year Dropdowns + Go Button
+ *		Header Panel
  *		All Scores Panel - refreshes each time a new date is selected
- *			Will Contain 3 sections: AL/NL/ Interleague
- *				Each Section will hold all the relevant games
+ *			Contains 3 sections: AL/NL/ Interleague
+ *				Each Section holds all the relevant games
  *		Indiv Game Panel - refreshes each time a new game is selected
  *			When a game is selected, it shows the full 9 inning plue RHE for each team
  *
  */
+@SuppressWarnings("serial")
 public class Gui extends JFrame {
 	// window size
 	private static int windowX = 1000;
 	private static int windowY = 1000;
 
-	private static int ddPanelHeight = 100;
-	private static int gamePanelHeight = 100;
+	private static int ddPanelHeight = 50;
+	private static int gamePanelHeight = 300;
 	public static String selectedDate;
 	static Calendar date = Utility.convertDateToCalendar(2015, 4, 20);
-	static Calendar date2 = Utility.convertDateToCalendar(2015, 4, 22);
+	// static Calendar date2 = Utility.convertDateToCalendar(2015, 4, 22);
 
 	GameDay[] AprilGames;
 	// static JFrame MLBFrame;
 	static JPanel scoresPanel;
 	static JPanel gamePanel;
 	static JPanel ddPanel;
+	static JPanel gPanel;
 	public static JComboBox<String> dayDropdown;
 	public static JComboBox<String> monthDropdown;
 	public static JComboBox<String> yearDropdown;
@@ -60,12 +64,6 @@ public class Gui extends JFrame {
 	JButton goButton;
 	GameDay selectedGameDay = new GameDay(date);
 
-	// System.out.println("GameDay 1 created");
-	// GameDay selectedGameDay2 = new GameDay(date2);
-
-	// System.out.println("GameDay 2 created");
-	// System.out.println("GameDay made");
-
 	public Gui() {
 		System.out.println("Gui()");
 		this.init();
@@ -77,43 +75,43 @@ public class Gui extends JFrame {
 		System.out.println("init()");
 
 		this.setTitle("MLB Scores");
-		// for (int i = 1; i < 10; i++) {
-		// Calendar currentDate = Utility.convertDateToCalendar(2015, 3, i);
-		// System.out.println("CurrentDate:"
-		// + Utility.convertCalendarToDate(currentDate)[1] + "/"
-		// + Utility.convertCalendarToDate(currentDate)[2] + "/"
-		// + Utility.convertCalendarToDate(currentDate)[0]);
-		// // GameDay newGameDay = new GameDay(currentDate);
-		// // AprilGames[i] = newGameDay;
-		//
-		// }
+
 		// create 3 panels that live on MLBFrame
 		ddPanel = dropdownPanel();
 		scoresPanel = scoresPanel(date);
-		gamePanel = gamePanel();
+		gamePanel = gamePanel(selectedGameDay.getGames().get(0));
 
 		this.setBounds(0, 0, windowX, windowY);
 		this.getContentPane().setBounds(0, 0, windowX, windowY);
 
+		this.getContentPane().setLayout(
+				new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+
+		//ddPanel.setSize(windowX, ddPanelHeight);
+
 		this.getContentPane().add(ddPanel);
 		this.getContentPane().add(scoresPanel);
 		this.getContentPane().add(gamePanel);
-		this.getContentPane().setLayout(
-				new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+
 		this.setVisible(true);
 
 	}
 
-	private JPanel gamePanel() {
-		JPanel gPanel = new JPanel();
-		// gPanel.setBounds(0, 500, windowX, gamePanelHeight);
-		gPanel.setBounds(0, 200, 300, 100);
-		// gamePanel.setSize(windowX, gamePanelHeight);
-		String[] dates = { "April 1, 2015", "July 2, 2015", "April 3, 2015",
-				"April 4, 2015" };
-		JComboBox<String> defaultDropdown = new JComboBox<String>(dates);
+	/**
+	 * @return gPanel
+	 */
+	private JPanel gamePanel(Game selectedGame) {
+		// Game selectGame = selectedGameDay.getGames().get(0);
+		gPanel = new JPanel();
+		// gPanel.setBounds(0, 200, 300, 100);
+		gPanel.setPreferredSize(new Dimension(windowX, gamePanelHeight));
+		gPanel.add(selectedGame.drawDetailed());
 
-		gPanel.add(defaultDropdown);
+		// String[] dates = { "April 1, 2015", "July 2, 2015", "April 3, 2015",
+		// "April 4, 2015" };
+		// JComboBox<String> defaultDropdown = new JComboBox<String>(dates);
+
+		// gPanel.add(defaultDropdown);
 
 		gPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
 
@@ -121,28 +119,27 @@ public class Gui extends JFrame {
 	}
 
 	/**
-	 * 
-	 * Holds 3 ComboBoxes, for Day, Month, and Year
+	 * Holds 3 ComboBoxes, for Day, Month, and Year, and Go Button
 	 * @return ddPanel
 	 */
 	public JPanel dropdownPanel() {
 		ddPanel = new JPanel();
-		// ddPanel.setSize(windowX, ddPanelHeight);
-		ddPanel.setBounds(0, 0, windowX, ddPanelHeight);
 
 		dayDropdown = new JComboBox<String>(days);
 		monthDropdown = new JComboBox<String>(months);
 		yearDropdown = new JComboBox<String>(years);
-
+		dayDropdown.setSelectedIndex(19);// 21st
+		monthDropdown.setSelectedIndex(3);// April
 		goButton = new JButton("Go");
 		goButton.addActionListener(new buttonListener(this));
 
-		// dropdown.addActionListener(new dropdownListener(this));
+		ddPanel.setMaximumSize(new Dimension(windowX, ddPanelHeight));
+
 		ddPanel.add(dayDropdown);
 		ddPanel.add(monthDropdown);
 		ddPanel.add(yearDropdown);
 		ddPanel.add(goButton);
-		
+
 		ddPanel.setBorder(BorderFactory.createLineBorder(Color.green));
 		return ddPanel;
 	}
@@ -150,24 +147,18 @@ public class Gui extends JFrame {
 	/**
 	 * Gets Games from GameDay and displays them in three sections:
 	 * AL, NL and Interleague
-	 * @param date 
+	 * @param inputDate 
+	 * @return scorePanel
 	 */
 	public JPanel scoresPanel(Calendar inputDate) {
-		// selectedGameDay = selectedGameDay4;
-		System.out.println("sP()");
+
 		System.out.println("sP:" + Utility.convertCalendarToDate(date)[1] + "/"
 				+ Utility.convertCalendarToDate(date)[2] + "/"
 				+ Utility.convertCalendarToDate(date)[0]);
 		JPanel scorePanel = new JPanel();
-		// TODO connect to dropdown
 		System.out.println("scorePanel made");
 
 		GameDay selectedGameDay = new GameDay(inputDate);
-		// System.out.println("GameDay created");
-		// if (date2 == inputDate){
-		// System.out.println("date==inputDate");
-		// selectedGameDay=selectedGameDay2;
-		// }
 
 		// List that holds games in category
 		List<Game> selectedALGames = selectedGameDay.getAmericanGames();
@@ -184,12 +175,19 @@ public class Gui extends JFrame {
 		JPanel NLPanel = new JPanel();
 		JPanel interPanel = new JPanel();
 
+		ALPanel.setBorder(BorderFactory
+				.createTitledBorder("American League Games"));
+		NLPanel.setBorder(BorderFactory
+				.createTitledBorder("National League Games"));
+		interPanel.setBorder(BorderFactory
+				.createTitledBorder("Inter-League Games"));
+
 		GridLayout grid = new GridLayout(Math.max(selectedALGames.size(),
 				Math.max(selectedNLGames.size(), selectedInterGames.size())), 1);
 
 		// AL
 		for (Game g : selectedALGames) {
-			ALGamesP.add(g.drawBasicScoreWithDate());
+			ALGamesP.add(g.drawBasicScore());
 		}
 		for (JPanel panel : ALGamesP) {
 			ALPanel.add(panel);
@@ -224,35 +222,36 @@ public class Gui extends JFrame {
 		scorePanel.setLayout(scoresPanelgrid);
 		scorePanel.setBounds(0, ddPanelHeight, 1000, 400);
 		System.out.println("return scorePanel");
+		scorePanel.setMinimumSize(new Dimension(windowX, 300));
+		scorePanel.setPreferredSize(new Dimension(windowX,600));
 		return scorePanel;
 	}
 
-
-
-	public void buttonPressed() {
+	/**
+	 * 
+	 */
+	public void goButtonPressed() {
 		System.out.println("Go Button Pressed");
-		int day = Gui.dayDropdown.getSelectedIndex()+1;
-		int month = Gui.monthDropdown.getSelectedIndex()+1;
+		int day = Gui.dayDropdown.getSelectedIndex() + 1;
+		int month = Gui.monthDropdown.getSelectedIndex() + 1;
 		int year = 2015 - Gui.yearDropdown.getSelectedIndex();
-
+		System.out.println(month + "/" + day + "/" + year);
 		Calendar newDate = Utility.convertDateToCalendar(year, month, day);
 		date = newDate;
 
-		System.out.println("ButtonPressed:" + Utility.convertCalendarToDate(date)[1] + "/"
+		System.out.println("ButtonPressed:"
+				+ Utility.convertCalendarToDate(date)[1] + "/"
 				+ Utility.convertCalendarToDate(date)[2] + "/"
 				+ Utility.convertCalendarToDate(date)[0]);
+
 		this.getContentPane().remove(scoresPanel);
 		this.getContentPane().remove(gamePanel);
-		scoresPanel = null;
 
-		// Program crashes here, takes to long to get???
-		// GameDay selectedGameDay3 = new GameDay(date);
 		scoresPanel = scoresPanel(date);
 
 		this.getContentPane().add(scoresPanel);
 		this.getContentPane().add(gamePanel);
 		this.getContentPane().revalidate();
-		// this.getContentPane().repaint();
 		this.getContentPane().setVisible(true);
 	}
 }

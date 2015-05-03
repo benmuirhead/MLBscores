@@ -87,10 +87,8 @@ public class Team {
 	}
 
 	public Team(String abv) {
-		System.out.println();
-		System.out.print("        begin Team Creation");
 		setAbbreviation(abv);
-		System.out.print("  abv='" + abv + "'");
+		System.out.print("abv='" + abv + "'");
 		int index = Team.findIndexOfAbbreviation(abv);
 		this.city = cityKey[index];
 		this.name = nameKey[index];
