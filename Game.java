@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.BufferedReader;
@@ -80,13 +81,12 @@ public class Game {
 	 * Creates the teams based on the URL
 	 */
 	private void createTeams() {
-		System.out.print("  begin createTeams()");
 		int indexAway = 80;// all urls are the same so a static location can be
 							// used
 		int indexHome = indexAway + 7;
 		int length = 3;
 		System.out.println();
-		
+
 		System.out.print("      base:  " + base);
 		System.out.print(base.toString().substring(indexAway,
 				indexAway + length));
@@ -98,8 +98,6 @@ public class Game {
 
 		System.out.println();
 		System.out.print("      begin homeTeam:  ");
-		System.out.print(base.toString().substring(indexHome,
-				indexHome + length));
 		homeTeam = new Team(base.toString().substring(indexHome,
 				indexHome + length));
 		System.out.println("  homeTeam made");
@@ -392,7 +390,8 @@ public class Game {
 		logoBar.add(awayTeamLogo);
 		logoBar.add(description);
 		logoBar.add(homeTeamLogo);
-
+		logoBar.setBorder(BorderFactory.createLineBorder(Color.green));
+		logoBar.setMaximumSize(new Dimension(1000,500));
 		return logoBar;
 	}
 
@@ -457,8 +456,10 @@ public class Game {
 		lineTable.getColumnModel().getColumn(NAME).setPreferredWidth(width * 8);
 
 		JScrollPane scroll = new JScrollPane(lineTable);
-		scroll.setSize(500, 100);
-		scroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		//scroll.setSize(500, 100);
+		scroll.setBorder(BorderFactory.createLineBorder(Color.red));
+		
+		scroll.setPreferredSize(new Dimension(500,100));
 		return scroll;
 		/*
 		 * JPanel homePanel = new JPanel(); JPanel awayPanel = new JPanel();
