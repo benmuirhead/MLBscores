@@ -187,7 +187,7 @@ public class Gui extends JFrame {
 		JPanel newGamePanel;
 		// AL
 		for (Game g : selectedALGames) {
-			newGamePanel = g.drawBasicScore();
+			newGamePanel = g.drawBasicScoreWithLogos();
 			newGamePanel.addMouseListener(new mouseListener(this));
 			ALGamesP.add(newGamePanel);
 		}
@@ -200,7 +200,7 @@ public class Gui extends JFrame {
 
 		// NL
 		for (Game g : selectedNLGames) {
-			newGamePanel = g.drawBasicScore();
+			newGamePanel = g.drawBasicScoreWithLogos();
 			newGamePanel.addMouseListener(new mouseListener(this));
 			NLGamesP.add(newGamePanel);
 		}
@@ -213,7 +213,7 @@ public class Gui extends JFrame {
 
 		// Interleague
 		for (Game g : selectedInterGames) {
-			newGamePanel = g.drawBasicScore();
+			newGamePanel = g.drawBasicScoreWithLogos();
 			newGamePanel.addMouseListener(new mouseListener(this));
 			interGamesP.add(newGamePanel);
 		}

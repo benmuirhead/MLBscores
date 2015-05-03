@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -423,6 +424,9 @@ public class Game {
 		GridLayout layout = new GridLayout(2, 1);// currently two objects will
 													// exist on the Panel
 		detailedGame.setLayout(layout);
+
+		// detailedGame.setLayout(new BoxLayout(detailedGame,
+		// BoxLayout.Y_AXIS));
 		detailedGame.add(this.drawLogoBar());// adds the logo bar
 		detailedGame.add(this.drawLineScore());// adds the line score
 		detailedGame.setToolTipText(this.venue);// the toolTip describes the
@@ -444,6 +448,9 @@ public class Game {
 		JLabel description = new JLabel(awayTeam.getCity() + " "
 				+ awayTeam.getName() + " at the " + homeTeam.getCity() + " "
 				+ homeTeam.getName());
+		Font descriptionFont = new Font("", Font.BOLD, 17);
+		description.setFont(descriptionFont);
+
 		JLabel homeTeamLogo = new JLabel(homeTeam.getLogo());
 		JLabel awayTeamLogo = new JLabel(awayTeam.getLogo());
 
@@ -465,6 +472,8 @@ public class Game {
 		final int HOME = 1;
 		final int NAME = 0;
 		JTable lineTable;
+
+		// Create Table Label
 		String[] tableLabels = new String[14];
 		tableLabels[NAME] = "Teams";
 		tableLabels[tableLabels.length - 3] = "R";
@@ -518,7 +527,8 @@ public class Game {
 		JScrollPane scroll = new JScrollPane(lineTable);
 		// scroll.setSize(500, 100);
 		scroll.setBorder(BorderFactory.createLineBorder(Color.red));
-
+		Font tablefont = new Font("", Font.PLAIN, 16);
+		scroll.setFont(tablefont);
 		scroll.setPreferredSize(new Dimension(500, 100));
 		return scroll;
 		/*
