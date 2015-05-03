@@ -56,8 +56,11 @@ public class GameDay
 			address = address + "day_" + day + "/";			
 		}
 		getHTML();//get the HTML of the game day info
+		System.out.println("  getHTML() done");
 		findGames(); //find the games from HTML
+		System.out.println("  findGames() done");
 		createGameObjects(); //create objects of games
+		System.out.println("  createGameObjects() done");
 		System.out.println("GameDay "+month+"/"+day+"/"+year+" created");
 	}
 	/**
@@ -194,9 +197,11 @@ public class GameDay
 	public void createGameObjects()
 	{
 		gamesToday = new ArrayList<Game>();
+		System.out.println("   gamesToday made");
 		for (String s: gameAddresses)
 		{
 			gamesToday.add(new Game(s));//creates a new game of String s
+			System.out.println("    Game made");
 		}
 	}
 	public String toString()

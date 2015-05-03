@@ -39,7 +39,7 @@ public class Gui extends JFrame {
 	private static int gamePanelHeight = 100;
 	public static String selectedDate;
 	static Calendar date = Utility.convertDateToCalendar(2015, 4, 20);
-	static Calendar date2 = Utility.convertDateToCalendar(2015, 4, 21);
+	static Calendar date2 = Utility.convertDateToCalendar(2015, 4, 22);
 
 	GameDay[] AprilGames;
 	// static JFrame MLBFrame;
@@ -64,16 +64,16 @@ public class Gui extends JFrame {
 		System.out.println("init()");
 
 		this.setTitle("MLB Scores");
-		for (int i = 1; i < 10; i++) {
-			Calendar currentDate = Utility.convertDateToCalendar(2015, 3, i);
-			System.out.println("CurrentDate:"
-					+ Utility.convertCalendarToDate(currentDate)[1] + "/"
-					+ Utility.convertCalendarToDate(currentDate)[2] + "/"
-					+ Utility.convertCalendarToDate(currentDate)[0]);
-			// GameDay newGameDay = new GameDay(currentDate);
-			// AprilGames[i] = newGameDay;
-
-		}
+		// for (int i = 1; i < 10; i++) {
+		// Calendar currentDate = Utility.convertDateToCalendar(2015, 3, i);
+		// System.out.println("CurrentDate:"
+		// + Utility.convertCalendarToDate(currentDate)[1] + "/"
+		// + Utility.convertCalendarToDate(currentDate)[2] + "/"
+		// + Utility.convertCalendarToDate(currentDate)[0]);
+		// // GameDay newGameDay = new GameDay(currentDate);
+		// // AprilGames[i] = newGameDay;
+		//
+		// }
 		// create 3 panels that live on MLBFrame
 		JPanel dropdownPanel = dropdownPanel();
 		scoresPanel = scoresPanel(selectedGameDay);
@@ -216,8 +216,8 @@ public class Gui extends JFrame {
 		scoresPanel = null;
 
 		// Program crashes here, takes to long to get???
-		// GameDay selectedGameDay3 = new GameDay(date);
-		scoresPanel = scoresPanel(selectedGameDay2);
+		 GameDay selectedGameDay3 = new GameDay(date);
+		scoresPanel = scoresPanel(selectedGameDay3);
 
 		this.getContentPane().add(scoresPanel);
 		this.getContentPane().add(gamePanel);

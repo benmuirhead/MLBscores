@@ -69,12 +69,20 @@ public class Team
 	}
 	public Team(String abv) 
 	{
+		System.out.print("        begin Team Creation");
 		setAbbreviation(abv);
+		System.out.print("  set abriv");
+		System.out.println("abv= "+abv);
 		int index = Team.findIndexOfAbbreviation(abv);
+		System.out.print("  index");
 		this.city = cityKey[index];
+		System.out.print("  city");
 		this.name = nameKey[index];
+		System.out.print("  name");
 		this.setImage();
+		System.out.print("  setImage()");
 		this.setLeague(index);
+		System.out.print("  setLeague()");
 		// TODO use a default image
 	}
 	private void setLeague(int index)
