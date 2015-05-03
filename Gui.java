@@ -1,3 +1,5 @@
+import javax.swing.JPanel;
+
 /**
  * 
  */
@@ -17,5 +19,5 @@
  *
  */
 public class Gui {
-JPanel windowFrame
+JPanel windowFrame;
 }
