@@ -227,26 +227,7 @@ public class Gui extends JFrame {
 		return scorePanel;
 	}
 
-	public void dropdownChange(Calendar cal) {
-		System.out.print("Dropdown Changed:");
-		date = cal;
-		System.out.println("dC:" + Utility.convertCalendarToDate(date)[1] + "/"
-				+ Utility.convertCalendarToDate(date)[2] + "/"
-				+ Utility.convertCalendarToDate(date)[0]);
-		this.getContentPane().remove(scoresPanel);
-		this.getContentPane().remove(gamePanel);
-		scoresPanel = null;
 
-		// Program crashes here, takes to long to get???
-		GameDay selectedGameDay3 = new GameDay(date);
-		scoresPanel = scoresPanel(date);
-
-		this.getContentPane().add(scoresPanel);
-		this.getContentPane().add(gamePanel);
-		this.getContentPane().revalidate();
-		// this.getContentPane().repaint();
-		this.getContentPane().setVisible(true);
-	}
 
 	public void buttonPressed() {
 		System.out.println("Go Button Pressed");
