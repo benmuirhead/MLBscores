@@ -42,7 +42,7 @@ import javax.swing.JScrollPane;
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 	// window size
-	private static int windowX = 1200;
+	private static int windowX = 1400;
 	private static int windowY = 1000;
 
 	private static int ddPanelHeight = 50;
@@ -68,7 +68,7 @@ public class Gui extends JFrame {
 			"23", "24", "25", "26", "27", "28", "29", "30", "31" };
 	String[] months = { "Jan", "Feb", "March", "Apr", "May", "Jun", "Jul",
 			"Aug", "Sep", "Oct", "Nov", "Dec" };
-	String[] years = { "2015", "2014", "2013", "2012", "2011", "2010" };
+	String[] years = { "2015", "2014", "2013"};//, "2012", "2011", "2010" };
 	String[] abbreviationKey = { "angels", "diamondBacks", "braves", "orioles",
 			"redSox", "whiteSox", "cubs", "reds", "indians", "rockies",
 			"tigers", "astros", "royals", "dodgers", "marlins", "brewers",
@@ -192,6 +192,8 @@ public class Gui extends JFrame {
 		gameRangePanel.setLayout(grid);
 
 		// TODO Auto-generated method stub
+		//gameRangePanel.setMinimumSize(new Dimension(400,300));
+		gameRangePanel.setPreferredSize(new Dimension(400,300));
 		return gameRangePanel;
 	}
 
@@ -225,7 +227,7 @@ public class Gui extends JFrame {
 		// gPanel.setBounds(0, 200, 300, 100);
 //		gPanel.setMinimumSize(new Dimension(windowX - 800, gamePanelHeight / 2));
 //		gPanel.setPreferredSize(new Dimension(windowX - 500, gamePanelHeight));
-		gPanel.setMaximumSize(new Dimension(windowX - 700, gamePanelHeight));
+		gPanel.setMaximumSize(new Dimension(windowX -800, gamePanelHeight));
 		gPanel.add(selectedGame.drawDetailed());
 
 		// String[] dates = { "April 1, 2015", "July 2, 2015", "April 3, 2015",
@@ -349,9 +351,10 @@ public class Gui extends JFrame {
 		scorePanel.setLayout(scoresPanelgrid);
 		// scorePanel.setBounds(0, ddPanelHeight, 700, 400);
 		System.out.println("return scorePanel");
-		scorePanel.setMinimumSize(new Dimension(windowX - 300, 300));
-		scorePanel.setPreferredSize(new Dimension(windowX - 300, 600));
+		scorePanel.setMinimumSize(new Dimension(windowX - 500, 300));
+		scorePanel.setPreferredSize(new Dimension(windowX - 500, 600));
 		return scorePanel;
+		//TODO
 	}
 
 	/**
