@@ -42,8 +42,8 @@ import javax.swing.JScrollPane;
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 	// window size
-	private static int windowX = 1400;
-	private static int windowY = 1000;
+	private static int windowX = 1800;
+	private static int windowY = 1200;
 
 	private static int ddPanelHeight = 50;
 	private static int gamePanelHeight = 300;
@@ -101,7 +101,7 @@ public class Gui extends JFrame {
 
 	JButton goButton;
 	GameDay selectedGameDay = new GameDay(date); // Creates Default GameDay
-	String team = Team.giants;// "San Francisco Giants"; // Creates initial team
+	String team = Team.diamondBacks;// "San Francisco Giants"; // Creates initial team
 
 	public Gui() {
 		System.out.println("Gui()");
@@ -153,8 +153,6 @@ public class Gui extends JFrame {
 		this.getContentPane().add(gamePanel, c);
 		System.out.println("gamePanel added");
 
-		// Select team dropdown
-
 		this.setBounds(0, 0, windowX, windowY);
 		this.getContentPane().setBounds(0, 0, windowX, windowY);
 
@@ -177,9 +175,9 @@ public class Gui extends JFrame {
 		// newGamePanel = gameRangeList.get(0).drawBasicScoreWithDate();
 		// gameRangePanel.add(newGamePanel);
 		for (Game g : gameRangeList) {
-			System.out.println(g.getAwayTeam());
+			//System.out.println(g.getAwayTeam());
 			newGamePanel = g.drawBasicScoreWithLogosAndDate();
-			newGamePanel.addMouseListener(new mouseListener2(this));
+			newGamePanel.addMouseListener(new mouseListener(this));
 			gameRangePanels.add(newGamePanel);
 		}
 
@@ -192,7 +190,7 @@ public class Gui extends JFrame {
 		gameRangePanel.setLayout(grid);
 
 		// TODO Auto-generated method stub
-		//gameRangePanel.setMinimumSize(new Dimension(400,300));
+		gameRangePanel.setMinimumSize(new Dimension(400,300));
 		gameRangePanel.setPreferredSize(new Dimension(400,300));
 		return gameRangePanel;
 	}
@@ -227,7 +225,7 @@ public class Gui extends JFrame {
 		// gPanel.setBounds(0, 200, 300, 100);
 //		gPanel.setMinimumSize(new Dimension(windowX - 800, gamePanelHeight / 2));
 //		gPanel.setPreferredSize(new Dimension(windowX - 500, gamePanelHeight));
-		gPanel.setMaximumSize(new Dimension(windowX -800, gamePanelHeight));
+		gPanel.setMaximumSize(new Dimension(windowX -1000, gamePanelHeight));
 		gPanel.add(selectedGame.drawDetailed());
 
 		// String[] dates = { "April 1, 2015", "July 2, 2015", "April 3, 2015",

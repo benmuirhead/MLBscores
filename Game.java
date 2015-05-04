@@ -468,7 +468,7 @@ public class Game {
 		basicScorePanel.add(homeTeamLogo);
 		basicScorePanel.add(homeLabel);
 		basicScorePanel.setName(gameURL);
-		basicScorePanel.setSize(85, 30);// give the panel an arbitaray size
+		basicScorePanel.setSize(85, 60);// give the panel an arbitaray size
 		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));// put
 																				// a
 																				// border
