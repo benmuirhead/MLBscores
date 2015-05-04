@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  *This GUI will create a large JPanel that will hold all the panels, dropdowns, etc
@@ -31,7 +32,7 @@ import javax.swing.JPanel;
  *+ AL   | NL    | IL    |Game Range +
  *+      |       |       |           +
  *+                                  +
- *+        Detailed Game             +
+ *+           Detailed Game          +
  *+                                  +
  *++++++++++++++++++++++++++++++++++++
  *
@@ -39,11 +40,9 @@ import javax.swing.JPanel;
  *
  */
 @SuppressWarnings("serial")
-
-
 public class Gui extends JFrame {
 	// window size
-	private static int windowX = 1000;
+	private static int windowX = 1200;
 	private static int windowY = 1000;
 
 	private static int ddPanelHeight = 50;
@@ -57,19 +56,52 @@ public class Gui extends JFrame {
 	static JPanel scoresPanel;
 	static JPanel gamePanel;
 	static JPanel ddPanel;
+	static JPanel selectTeamPanel;
 	static JPanel gPanel;
+	static JPanel gameRangePanel;
 	public static JComboBox<String> dayDropdown;
 	public static JComboBox<String> monthDropdown;
 	public static JComboBox<String> yearDropdown;
+	public static JComboBox<String> teamsDropdown;
 	String[] days = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
 			"12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
 			"23", "24", "25", "26", "27", "28", "29", "30", "31" };
 	String[] months = { "Jan", "Feb", "March", "Apr", "May", "Jun", "Jul",
 			"Aug", "Sep", "Oct", "Nov", "Dec" };
 	String[] years = { "2015", "2014", "2013", "2012", "2011", "2010" };
+	String[] abbreviationKey = { "angels", "diamondBacks", "braves", "orioles",
+			"redSox", "whiteSox", "cubs", "reds", "indians", "rockies",
+			"tigers", "astros", "royals", "dodgers", "marlins", "brewers",
+			"twins", "yankees", "mets", "athletics", "phillies", "pirates",
+			"padres", "mariners", "giants", "cardinals", "rays", "rangers",
+			"blueJays", "nationals" };
+	String[] cityKey = { "Los Angeles", "Arizona", "Atlanta", "Baltimore",
+			"Boston", "Chicago", "Chicago", "Cincinati", "Cleveland",
+			"Colorado", "Detroit", "Houston", "Kansas City", "Los Angeles",
+			"Miami", "Milwaukee", "Minnesota", "New York", "New York",
+			"Oakland", "Philidelphia", "Pittsburgh", "San Diego", "Seattle",
+			"San Francisco", "St. Louis", "Tampa Bay", "Texas", "Toronto",
+			"Washington" };
+	String[] nameKey = { "Angels", "Diamondbacks", "Braves", "Orioles",
+			"Red Sox", "White Sox", "Cubs", "Reds", "Indians", "Rockies",
+			"Tigers", "Astros", "Royals", "Dodgers", "Marlins", "Brewers",
+			"Twins", "Yankees", "Mets", "Athletics", "Phillies", "Pirates",
+			"Padres", "Mariners", "Giants", "Cardinals", "Rays", "Rangers",
+			"Blue Jays", "Nationals" };
+	String[] teams = { "Arizona Diamondbacks", "Atlanta Braves",
+			"Baltimore Orioles", "Boston Red Sox", "Chicago White Sox",
+			"Chicago Cubs", "Cincinati Reds", "Cleveland Indians",
+			"Colorado Rockies", "Detroit Tigers", "Houston Astros",
+			"Kansas City Royals", "Los Angeles Dodgers", "Miami Marlins",
+			"Milwaukee Brewers", "Minnesota Twins", "New York Yankees",
+			"New York Mets", "Oakland Athletics", "Philidelphia Phillies",
+			"Pittsburgh Pirates", "San Diego Padres", "Seattle Mariners",
+			"San Francisco Giants", "St. Louis Cardinals", "Tampa Bay Rays",
+			"Texas Rangers", "Toronto Blue Jays", "Washington Nationals" };
 
 	JButton goButton;
-	GameDay selectedGameDay = new GameDay(date);
+	GameDay selectedGameDay = new GameDay(date); // Creates Default GameDay
+	String team = Team.giants;// "San Francisco Giants"; // Creates initial team
 
 	public Gui() {
 		System.out.println("Gui()");
@@ -86,28 +118,101 @@ public class Gui extends JFrame {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
-		
-		
-		
-		
+
+		// day/month/year dropdown
 		ddPanel = dropdownPanel();
-		
+		c.gridx = 0;
+		c.gridy = 0;
+		this.getContentPane().add(ddPanel, c);
+		System.out.println("ddPanel added");
+
+		// Holds all games for a given date
 		scoresPanel = scoresPanel(date);
+		c.gridx = 0;
+		c.gridy = 1;
+		this.getContentPane().add(scoresPanel, c);
+		System.out.println("scoresPanel added");
+
+		// select team dropdown
+		selectTeamPanel = selectTeamPanel();
+		c.gridx = 1;
+		c.gridy = 0;
+		this.getContentPane().add(selectTeamPanel, c);
+		System.out.println("selectTeamPanel added");
+
+		// Holds all games for one team
+		gameRangePanel = buildGameRangePanel(team);
+		c.gridx = 1;
+		c.gridy = 1;
+		this.getContentPane().add(gameRangePanel, c);
+
+		// Holds detailed view of one game
 		gamePanel = gamePanel(selectedGameDay.getGames().get(0));
+		c.gridx = 0;
+		c.gridy = 2;
+		this.getContentPane().add(gamePanel, c);
+		System.out.println("gamePanel added");
+
+		// Select team dropdown
 
 		this.setBounds(0, 0, windowX, windowY);
 		this.getContentPane().setBounds(0, 0, windowX, windowY);
 
-		this.getContentPane().setLayout(
-				new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-
-		// ddPanel.setSize(windowX, ddPanelHeight);
-
-		this.getContentPane().add(ddPanel);
-		this.getContentPane().add(scoresPanel);
-		this.getContentPane().add(gamePanel);
-
 		this.setVisible(true);
+
+	}
+
+	private JPanel buildGameRangePanel(String team) {
+		gameRangePanel = new JPanel();
+
+		Calendar startDate = Utility.convertDateToCalendar(2015, 4, 28);
+		Calendar endDate = Utility.convertDateToCalendar(2015, 5, 3);
+		GameRange gameRange = new GameRange(team, startDate, endDate);
+
+		List<Game> gameRangeList = gameRange.getGames();
+		List<JPanel> gameRangePanels = new ArrayList<JPanel>();
+
+		JPanel newGamePanel;// temp var that holds newly created panels
+		System.out.println(gameRangeList.get(0).getClass());
+		// newGamePanel = gameRangeList.get(0).drawBasicScoreWithDate();
+		// gameRangePanel.add(newGamePanel);
+		for (Game g : gameRangeList) {
+			System.out.println(g.getAwayTeam());
+			newGamePanel = g.drawBasicScoreWithLogosAndDate();
+			newGamePanel.addMouseListener(new mouseListener2(this));
+			gameRangePanels.add(newGamePanel);
+		}
+
+		GridLayout grid = new GridLayout(gameRangePanels.size(), 1);
+		//
+		for (JPanel panel : gameRangePanels) {
+
+			gameRangePanel.add(panel);
+		}
+		gameRangePanel.setLayout(grid);
+
+		// TODO Auto-generated method stub
+		return gameRangePanel;
+	}
+
+	@SuppressWarnings("null")
+	private JPanel selectTeamPanel() {
+		System.out.println("selectTeamsPanel started");
+		selectTeamPanel = new JPanel();
+
+		teamsDropdown = new JComboBox<String>(teams);
+
+		System.out.println("JCombo box created");
+		teamsDropdown.addActionListener(new dropdownListener(this));
+
+		selectTeamPanel.setMaximumSize(new Dimension(200, ddPanelHeight));
+
+		selectTeamPanel.add(teamsDropdown);
+
+		selectTeamPanel
+				.setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
+
+		return selectTeamPanel;
 
 	}
 
@@ -118,7 +223,9 @@ public class Gui extends JFrame {
 		// Game selectGame = selectedGameDay.getGames().get(0);
 		gPanel = new JPanel();
 		// gPanel.setBounds(0, 200, 300, 100);
-		gPanel.setPreferredSize(new Dimension(windowX, gamePanelHeight));
+//		gPanel.setMinimumSize(new Dimension(windowX - 800, gamePanelHeight / 2));
+//		gPanel.setPreferredSize(new Dimension(windowX - 500, gamePanelHeight));
+		gPanel.setMaximumSize(new Dimension(windowX - 700, gamePanelHeight));
 		gPanel.add(selectedGame.drawDetailed());
 
 		// String[] dates = { "April 1, 2015", "July 2, 2015", "April 3, 2015",
@@ -147,7 +254,7 @@ public class Gui extends JFrame {
 		goButton = new JButton("Go");
 		goButton.addActionListener(new buttonListener(this));
 
-		ddPanel.setMaximumSize(new Dimension(windowX, ddPanelHeight));
+		ddPanel.setPreferredSize(new Dimension(800, ddPanelHeight));
 
 		ddPanel.add(dayDropdown);
 		ddPanel.add(monthDropdown);
@@ -240,10 +347,10 @@ public class Gui extends JFrame {
 
 		GridLayout scoresPanelgrid = new GridLayout(1, 3);
 		scorePanel.setLayout(scoresPanelgrid);
-		scorePanel.setBounds(0, ddPanelHeight, 1000, 400);
+		// scorePanel.setBounds(0, ddPanelHeight, 700, 400);
 		System.out.println("return scorePanel");
-		scorePanel.setMinimumSize(new Dimension(windowX, 300));
-		scorePanel.setPreferredSize(new Dimension(windowX, 600));
+		scorePanel.setMinimumSize(new Dimension(windowX - 300, 300));
+		scorePanel.setPreferredSize(new Dimension(windowX - 300, 600));
 		return scorePanel;
 	}
 
@@ -268,19 +375,52 @@ public class Gui extends JFrame {
 		this.getContentPane().remove(gamePanel);
 
 		scoresPanel = scoresPanel(date);
-
-		this.getContentPane().add(scoresPanel);
-		this.getContentPane().add(gamePanel);
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 1;
+		this.getContentPane().add(scoresPanel, c);
+		c.gridx = 0;
+		c.gridy = 2;
+		this.getContentPane().add(gamePanel, c);
 		this.getContentPane().revalidate();
 		this.getContentPane().setVisible(true);
 	}
 
 	public void newDetailGame(Game newGame) {
 		System.out.println("new Game Selected");
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 2;
 		this.getContentPane().remove(gamePanel);
 		gamePanel = gamePanel(newGame);
-		this.getContentPane().add(gamePanel);
+		this.getContentPane().add(gamePanel, c);
 		this.getContentPane().revalidate();
 		this.getContentPane().setVisible(true);
+	}
+
+	public void newTeamSelected(String fullNewTeamName) {
+
+		System.out.println("fullNameNewTeam: " + fullNewTeamName);
+		int index = 0;
+		for (int i = 0; i < abbreviationKey.length - 1; i++) {
+			System.out.println(teams[i]);
+			if (fullNewTeamName.equals(teams[i])) {
+				index = i;
+				System.out.println(index);
+				break;
+			}
+		}
+		String newTeam = Team.abbreviationKey[index + 1];
+		System.out.println(newTeam);
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 1;
+		c.gridy = 1;
+		this.getContentPane().remove(gameRangePanel);
+		gameRangePanel = buildGameRangePanel(newTeam);
+		this.getContentPane().add(gameRangePanel, c);
+		this.getContentPane().revalidate();
+		this.getContentPane().setVisible(true);
+
 	}
 }
