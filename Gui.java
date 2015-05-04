@@ -66,7 +66,7 @@ public class Gui extends JFrame {
 			"23", "24", "25", "26", "27", "28", "29", "30", "31" };
 	String[] months = { "Jan", "Feb", "March", "Apr", "May", "Jun", "Jul",
 			"Aug", "Sep", "Oct", "Nov", "Dec" };
-	String[] years = { "2015", "2014", "2013", "2012", "2011", "2010" };
+	String[] years = { "2015", "2014", "2013"};//, "2012", "2011", "2010" };
 
 	JButton goButton;
 	GameDay selectedGameDay = new GameDay(date);
