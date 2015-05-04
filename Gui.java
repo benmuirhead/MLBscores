@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,14 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * 
- */
-
-/**
- * @author Ben
- */
-
-/**
  *This GUI will create a large JPanel that will hold all the panels, dropdowns, etc
  *Structure:
  *	JFrame Gui 
@@ -31,9 +25,22 @@ import javax.swing.JPanel;
  *				Each Section holds all the relevant games
  *		Indiv Game Panel - refreshes each time a new game is selected
  *			When a game is selected, it shows the full 9 inning plue RHE for each team
+ *++++++++++++++++++++++++++++++++++
+ *+         dropdown1    | dropdown2 +
+ *+      |       |       |           +
+ *+ AL   | NL    | IL    |Game Range +
+ *+      |       |       |           +
+ *+                                  +
+ *+        Detailed Game             +
+ *+                                  +
+ *++++++++++++++++++++++++++++++++++++
+ *
+ * @author Ben Muirhead
  *
  */
 @SuppressWarnings("serial")
+
+
 public class Gui extends JFrame {
 	// window size
 	private static int windowX = 1000;
@@ -75,9 +82,16 @@ public class Gui extends JFrame {
 		System.out.println("init()");
 
 		this.setTitle("MLB Scores");
-
-		// create 3 panels that live on MLBFrame
+		// use grid bag layout
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		
+		
+		
 		ddPanel = dropdownPanel();
+		
 		scoresPanel = scoresPanel(date);
 		gamePanel = gamePanel(selectedGameDay.getGames().get(0));
 
@@ -87,7 +101,7 @@ public class Gui extends JFrame {
 		this.getContentPane().setLayout(
 				new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 
-		//ddPanel.setSize(windowX, ddPanelHeight);
+		// ddPanel.setSize(windowX, ddPanelHeight);
 
 		this.getContentPane().add(ddPanel);
 		this.getContentPane().add(scoresPanel);
@@ -229,7 +243,7 @@ public class Gui extends JFrame {
 		scorePanel.setBounds(0, ddPanelHeight, 1000, 400);
 		System.out.println("return scorePanel");
 		scorePanel.setMinimumSize(new Dimension(windowX, 300));
-		scorePanel.setPreferredSize(new Dimension(windowX,600));
+		scorePanel.setPreferredSize(new Dimension(windowX, 600));
 		return scorePanel;
 	}
 
@@ -260,12 +274,11 @@ public class Gui extends JFrame {
 		this.getContentPane().revalidate();
 		this.getContentPane().setVisible(true);
 	}
-	
-	
-	public void newDetailGame(Game newGame){
+
+	public void newDetailGame(Game newGame) {
 		System.out.println("new Game Selected");
 		this.getContentPane().remove(gamePanel);
-		gamePanel=gamePanel(newGame);
+		gamePanel = gamePanel(newGame);
 		this.getContentPane().add(gamePanel);
 		this.getContentPane().revalidate();
 		this.getContentPane().setVisible(true);

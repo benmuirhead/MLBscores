@@ -12,7 +12,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,12 +20,11 @@ import javax.swing.table.TableColumn;
 
 import java.awt.Color;
 
-/**
- * A class which holds the data for a given game in the form of a URL on the MLB API
- */
 
 /**
+ * A class which holds the data for a given game in the form of a URL on the MLB API
  * @author Samuel Doud
+ * @author Ben Muirhead
  *
  */
 public class Game {
@@ -61,7 +59,7 @@ public class Game {
 
 	/**
 	 * Creates a game object by parsing a URL where the game's data is located
-	 * Then contructor delegates to other methods
+	 * Then constructor delegates to other methods
 	 */
 	public Game(String gameURL) {
 		this.gameURL = gameURL;

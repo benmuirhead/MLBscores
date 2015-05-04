@@ -1,6 +1,3 @@
-/**
- * 
- */
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,8 +8,9 @@ import java.net.URL;
 
 
 /**
+ * Class that holds all of the games from a given day
  * @author Samuel Doud
- * Class that holds all of the games of a day
+ * 
  */
 public class GameDay 
 {
@@ -23,6 +21,8 @@ public class GameDay
 	private List<String> gameAddresses; //addresses of all of the games
 	/**
 	 * Create the address of the games base file based on the passed parameters
+	 *
+	 * @param c
 	 */
 	public GameDay(Calendar c) 
 	{

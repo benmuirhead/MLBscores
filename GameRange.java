@@ -11,6 +11,10 @@ import java.util.List;
 import javax.swing.JLabel;
 
 
+/**
+ * @author Samuel Doud
+ *
+ */
 public class GameRange {
 	private String baseAddress = "http://gd2.mlb.com/components/game/mlb/";
 	private String name;

@@ -5,9 +5,10 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- * @author Samuel Doud
+ * 
  * A class that stores a major league baseball team
  * Data such as logo, hometown, abbreviation, league, and name
+ * @author Samuel Doud
  */
 public class Team {
 	public static final String AMERICAN_LEAGUE = "American League";

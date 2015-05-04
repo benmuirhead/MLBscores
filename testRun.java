@@ -1,25 +1,18 @@
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 /**
  * 
  */
 
 /**
+ * Main class. Creates the GUI that will hold all Panels
+ * 
  * @author Samuel Doud
  * @author Ben Muirhead
  *
  * 
  */
-public class testRun extends JFrame {
+public class testRun {
 	/**
 	 * @param args
 	 */
@@ -28,10 +21,11 @@ public class testRun extends JFrame {
 	}
 
 	public testRun() {
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.init();
 	}
 
+	@SuppressWarnings("unused")
 	public void init() {
 		// GameDay testGames = new GameDay(2015, 04, 23);
 		// System.out.println(testGames.toString());
