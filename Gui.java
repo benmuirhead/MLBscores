@@ -1,3 +1,12 @@
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -19,5 +28,74 @@ import javax.swing.JPanel;
  *
  */
 public class Gui {
-JPanel windowFrame;
+	// window size
+	private static int windowX = 1000;
+	private static int windowY = 1000;
+
+	public Gui() {
+		init();
+	}
+
+	public void init() {
+
+		JFrame MLBFrame;
+		MLBFrame = new JFrame();
+		MLBFrame.setTitle("MLB Scores");
+
+		// create 3 panels that live on MLBFrame
+		JPanel dropdownPanel = dropdownPanel();
+		JPanel scoresPanel = scoresPanel();
+		JPanel gamePanel = new JPanel();
+
+		MLBFrame.setBounds(0, 0, windowX, windowY);
+
+		MLBFrame.add(dropdownPanel);
+		MLBFrame.add(scoresPanel);
+		MLBFrame.add(gamePanel);
+
+		MLBFrame.setVisible(true);
+		MLBFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public JPanel dropdownPanel() {
+		JPanel ddPanel = new JPanel();
+
+		ddPanel.setSize(windowX, 100);
+
+		String[] dates = { "April 1, 2015", "April 2, 2015", "April 3, 2015",
+				"April 4, 2015" };
+		JComboBox<String> dropdown = new JComboBox<String>(dates);
+
+		ddPanel.add(dropdown);
+		ddPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		return ddPanel;
+	}
+
+	public JPanel scoresPanel() {
+		/**
+		 * Gets Games from Game Range?
+		 */
+		JPanel scoresPanel = new JPanel();
+		Calendar date = Utility.convertDateToCalendar(2015, 4, 20);
+
+		GameDay selectedGameDay = new GameDay(date);
+		List<Game> selectedGames = selectedGameDay.getNationalGames();
+		List<JPanel> selectedGamesPanels = new ArrayList<JPanel>();
+
+		for (Game g : selectedGames) {
+			selectedGamesPanels.add(g.drawBasicScore());
+		}
+
+		
+		GridLayout grid = new GridLayout(selectedGamesPanels.size(), 1);
+		scoresPanel.setLayout(grid);
+
+		for (JPanel panel : selectedGamesPanels) {
+			scoresPanel.add(panel);
+		}
+
+		scoresPanel.setSize(windowX, 400);
+
+		return scoresPanel;
+	}
 }
