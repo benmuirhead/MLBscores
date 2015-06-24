@@ -1,8 +1,4 @@
-/**
- * 
- */
 import java.util.*;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,8 +8,9 @@ import java.net.URL;
 
 
 /**
+ * Class that holds all of the games from a given day
  * @author Samuel Doud
- * Class that holds all of the games of a day
+ * 
  */
 public class GameDay 
 {
@@ -24,15 +21,19 @@ public class GameDay
 	private List<String> gameAddresses; //addresses of all of the games
 	/**
 	 * Create the address of the games base file based on the passed parameters
+	 *
+	 * @param c
 	 */
 	public GameDay(Calendar c) 
 	{
-		//convert the calendar c to day, month, year
+		System.out.print("Begin GameDay");//convert the calendar c to day, month, year
 		int day, month,year;
 		day = c.get(Calendar.DAY_OF_MONTH);
 		month = c.get(Calendar.MONTH);
 		year = c.get(Calendar.YEAR);
-		
+		System.out.println("-" + Utility.convertCalendarToDate(c)[1] + "/"
+				+ Utility.convertCalendarToDate(c)[2] + "/"
+				+ Utility.convertCalendarToDate(c)[0]);
 		
 		myHTML="";
 		//add the year to the address
@@ -56,8 +57,16 @@ public class GameDay
 			address = address + "day_" + day + "/";			
 		}
 		getHTML();//get the HTML of the game day info
+		System.out.println();
+		System.out.print("  1.getHTML() done");
 		findGames(); //find the games from HTML
+		System.out.println();
+		System.out.print("  2.findGames() done");
 		createGameObjects(); //create objects of games
+		System.out.println();
+		System.out.print("  3.createGameObjects() done");
+		System.out.println();
+		System.out.println("  4.GameDay "+month+"/"+day+"/"+year+" created");
 	}
 	/**
 	 * Get the HTML base file for the given date
