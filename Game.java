@@ -286,11 +286,6 @@ public class Game {
 		}
 		basicScorePanel.add(awayLabel);// add the labels
 		basicScorePanel.add(homeLabel);
-<<<<<<< HEAD
-		
-		basicScorePanel.setSize(85, 30);//give the panel n arbitrary size
-		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));//put a border around the panel
-=======
 		basicScorePanel.setName(gameURL);
 		basicScorePanel.setSize(85, 30);// give the panel n arbitrary size
 		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));// put
@@ -299,7 +294,6 @@ public class Game {
 																				// around
 																				// the
 																				// panel
->>>>>>> b0d836b864d124b5dc35787de3611b5809cbafdb
 		return basicScorePanel;
 	}
 
@@ -426,15 +420,15 @@ public class Game {
 
 		JPanel basicScorePanel = new JPanel();
 		GridLayout grid = new GridLayout(3, 2);
-		
+
 		basicScorePanel.setLayout(grid);
-		
+
 		basicScorePanel.add(dateLabel);
-		
-		//fill extra slot
+
+		// fill extra slot
 		JPanel fillPanel = new JPanel();
 		basicScorePanel.add(fillPanel);
-		
+
 		// Logic to set the team names to a length of twelve chars
 		String homeName = homeTeam.getName();
 		String awayName = awayTeam.getName();
@@ -491,12 +485,14 @@ public class Game {
 	 */
 	public JPanel drawDetailed() {
 		JPanel detailedGame = new JPanel();
+		Font tablefont = new Font("", Font.PLAIN, 18);
 		GridLayout layout = new GridLayout(2, 1);// currently two objects will
 													// exist on the Panel
 		detailedGame.setLayout(layout);
 
 		// detailedGame.setLayout(new BoxLayout(detailedGame,
 		// BoxLayout.Y_AXIS));
+		detailedGame.setFont(tablefont);
 		detailedGame.add(this.drawLogoBar());// adds the logo bar
 		detailedGame.add(this.drawLineScore());// adds the line score
 		detailedGame.setToolTipText(this.venue);// the toolTip describes the
@@ -527,7 +523,7 @@ public class Game {
 		logoBar.add(awayTeamLogo);
 		logoBar.add(description);
 		logoBar.add(homeTeamLogo);
-		logoBar.setBorder(BorderFactory.createLineBorder(Color.green));
+		logoBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		logoBar.setMaximumSize(new Dimension(1000, 500));
 		return logoBar;
 	}
@@ -542,7 +538,7 @@ public class Game {
 		final int HOME = 1;
 		final int NAME = 0;
 		JTable lineTable;
-
+		Font tablefont = new Font("", Font.PLAIN, 16);
 		// Create Table Label
 		String[] tableLabels = new String[14];
 		tableLabels[NAME] = "Teams";
@@ -564,21 +560,14 @@ public class Game {
 				+ this.homeTeam.getName();
 
 		for (int i = 0; i < homeScoreInning.length; i++) {
-			data[AWAY][i + tableLabels.length - awayScoreInning.length] = awayScoreInning[i];// places
-																								// the
-																								// inning
-																								// data
-																								// in
-																								// the
-																								// correct
-																								// data
-																								// array
-																								// cell
+			data[AWAY][i + tableLabels.length - awayScoreInning.length] = awayScoreInning[i];
+			// places the inning data in the correct data array cell
 			data[HOME][i + tableLabels.length - homeScoreInning.length] = homeScoreInning[i];
 		}
-
+		
 		// Create a JTable of data with headers tableLabels
 		lineTable = new JTable(data, tableLabels);
+		lineTable.setFont(tablefont);
 		// set the preferred width of the columns to the variable width
 		int width = 20;
 		TableColumn tempCol = null;
@@ -596,8 +585,8 @@ public class Game {
 
 		JScrollPane scroll = new JScrollPane(lineTable);
 		// scroll.setSize(500, 100);
-		scroll.setBorder(BorderFactory.createLineBorder(Color.red));
-		Font tablefont = new Font("", Font.PLAIN, 16);
+		scroll.setBorder(BorderFactory.createLineBorder(Color.black));
+		
 		scroll.setFont(tablefont);
 		scroll.setPreferredSize(new Dimension(500, 100));
 		return scroll;
