@@ -17,11 +17,11 @@ To view the detailed line score of a game, simply click on that game.
 ###Classes
 The classes to the program are organized as such
 
-*Run: Runs the program, generating the GUI
+* Run: Runs the program, generating the GUI
 
-*GUI: creates the Graphical User Interface to display the graphics components of the games
+* GUI: creates the Graphical User Interface to display the graphics components of the games
 
-*Game: A class based on the URL accessed from the MLB API. It finds the information for a certain game as delegated by the GameDay or GameRange classes. Creates the Swing components to display the games.
+* Game: A class based on the URL accessed from the MLB API. It finds the information for a certain game as delegated by the GameDay or GameRange classes. Creates the Swing components to display the games.
 
 GameDay: Organizes the games of a given date and sends Swing components of score to the GUI in an organized fashion
 
