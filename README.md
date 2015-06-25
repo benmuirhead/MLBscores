@@ -15,7 +15,7 @@ If a single date is given, then the program will show the scores of all the game
 To view the detailed line score of a game, simply click on that game.
 
 ###Classes
-The classes to the program are organized as such
+The classes to the program are organized as fallows:
 
 * Run: Runs the program, generating the GUI
 * GUI: creates the Graphical User Interface to display the graphics components of the games
