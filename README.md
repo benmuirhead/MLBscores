@@ -1,6 +1,6 @@
 # MLBscores
 This program is a collaboration of Ben Muirhead and Samuel Doud
-
+View the repository at https://github.com/benmuirhead/MLBscores
 ![MLB Scores](Screenshot of MLB Scores.PNG)
 
 ###Overview
