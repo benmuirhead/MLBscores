@@ -5,10 +5,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- * 
- * A class that stores a major league baseball team
- * Data such as logo, hometown, abbreviation, league, and name
+ * A class that stores a major league baseball team's data, including logo, hometown, abbreviation, league, and name
  * @author Samuel Doud
+ * @author Ben Muirhead
  */
 public class Team {
 	public static final String AMERICAN_LEAGUE = "American League";
@@ -84,7 +83,6 @@ public class Team {
 		abbreviation = "";
 		city = "";
 		name = "";
-		// TODO use a default image
 	}
 
 	public Team(String abv) {
@@ -95,7 +93,6 @@ public class Team {
 		this.name = nameKey[index];
 		this.setImage();
 		this.setLeague(index);
-		// TODO use a default image
 	}
 
 	private void setLeague(int index) {
@@ -113,16 +110,16 @@ public class Team {
 	 */
 	private static int findIndexOfAbbreviation(String abv) {
 
-//		for (int k = 0; k < abbreviationKey.length; k++) {
-//			if (abbreviationKey[k].equals(abv)) {
-//				System.out.println("  "+k);
-//				return k;
-//			}
-//		}
-//		System.out.println();
-//		System.out.print("Match failed, returning 0 (angels)");
-//		return 0;
-//		
+		// for (int k = 0; k < abbreviationKey.length; k++) {
+		// if (abbreviationKey[k].equals(abv)) {
+		// System.out.println("  "+k);
+		// return k;
+		// }
+		// }
+		// System.out.println();
+		// System.out.print("Match failed, returning 0 (angels)");
+		// return 0;
+		//
 		int index = abbreviationKey.length;
 		int differ = abbreviationKey.length;// middle of the array
 		int direction = -1;

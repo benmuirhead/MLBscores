@@ -7,14 +7,11 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 /**
  *This GUI will create a large JPanel that will hold all the panels, dropdowns, etc
@@ -26,7 +23,7 @@ import javax.swing.JScrollPane;
  *			Contains 3 sections: AL/NL/ Interleague
  *				Each Section holds all the relevant games
  *		Indiv Game Panel - refreshes each time a new game is selected
- *			When a game is selected, it shows the full 9 inning plue RHE for each team
+ *			When a game is selected, it shows the full 9 inning plus RHE for each team
  *++++++++++++++++++++++++++++++++++
  *+         dropdown1    | dropdown2 +
  *+      |       |       |           +
@@ -191,13 +188,11 @@ public class Gui extends JFrame {
 		}
 		gameRangePanel.setLayout(grid);
 
-		// TODO Auto-generated method stub
 		gameRangePanel.setMinimumSize(new Dimension(400, 300));
 		gameRangePanel.setPreferredSize(new Dimension(400, 300));
 		return gameRangePanel;
 	}
 
-	@SuppressWarnings("null")
 	private JPanel selectTeamPanel() {
 		System.out.println("selectTeamsPanel started");
 		selectTeamPanel = new JPanel();
@@ -363,7 +358,6 @@ public class Gui extends JFrame {
 		scorePanel.setMinimumSize(new Dimension(windowX - 500, 300));
 		scorePanel.setPreferredSize(new Dimension(windowX - 500, 600));
 		return scorePanel;
-		// TODO
 	}
 
 	/**

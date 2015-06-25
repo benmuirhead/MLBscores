@@ -19,7 +19,7 @@ public class Run {
 
 	public Run() {
 		this.init();
-	}
+	}	
 
 	@SuppressWarnings("unused")
 	public void init() {

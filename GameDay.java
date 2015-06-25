@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * Class that holds all of the games from a given day
  * @author Samuel Doud
- * 
+ * @author Ben Muirhead
  */
 public class GameDay 
 {
@@ -216,5 +216,4 @@ public class GameDay
 		}
 		return text;
 	}
-	//TODO this class will create the standings
 }

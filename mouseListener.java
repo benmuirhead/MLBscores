@@ -3,6 +3,12 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
+/**
+ * Implements a MouseListener for clicking on games to bring up the detailed score
+ * @author Samuel Doud
+ * @author Ben Muirhead
+ */
+
 public class mouseListener implements MouseListener {
 
 	private Gui Gui;
@@ -13,7 +19,6 @@ public class mouseListener implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		Game newGame;
 		JPanel source = (JPanel) e.getSource();
 		String gameURL = source.getName();
@@ -25,26 +30,18 @@ public class mouseListener implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

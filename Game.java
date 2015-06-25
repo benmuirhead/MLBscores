@@ -178,7 +178,7 @@ public class Game {
 
 	/**
 	 * 
-	 * @return
+	 * @return int array with the line score
 	 */
 	public int[] getLine() {
 		int[] combinedLine = new int[homeScoreInning.length
@@ -192,6 +192,9 @@ public class Game {
 		return combinedLine;
 	}
 
+	/**
+	 * Creates the title for the detailed score
+	 */
 	public String toString() {
 		String text = venue + "\n";
 
@@ -211,7 +214,7 @@ public class Game {
 	/**
 	 * get the inning currently being played
 	 * useful if the game is final
-	 * @return
+	 * 
 	 */
 	public String getInning() {
 		String text = "";
@@ -287,7 +290,7 @@ public class Game {
 		basicScorePanel.add(awayLabel);// add the labels
 		basicScorePanel.add(homeLabel);
 		basicScorePanel.setName(gameURL);
-		basicScorePanel.setSize(85, 30);// give the panel n arbitrary size
+		basicScorePanel.setSize(85, 30);
 		basicScorePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));// put
 																				// a
 																				// border
@@ -351,6 +354,10 @@ public class Game {
 		return basicScorePanel;
 	}
 
+	/**
+	 * Used to draw the headline scores when looking at a specific date
+	 * 
+	 */
 	public JPanel drawBasicScoreWithLogos() {
 		// the fonts the winners and losers will use
 		Font winner = new Font("", Font.BOLD, 16);
@@ -386,11 +393,9 @@ public class Game {
 			awayLabel.setFont(winner);
 			homeLabel.setFont(loser);
 		}
-		// creat logo to add in front of team name
+		// create logo to add in front of team name
 		JLabel homeTeamLogo = new JLabel(homeTeam.getLogo());
 		JLabel awayTeamLogo = new JLabel(awayTeam.getLogo());
-		// homeTeamLogo.setPreferredSize(new Dimension(100,100));
-		// awayTeamLogo.setPreferredSize(new Dimension(50,100));
 
 		// add the created labels and logos back to the panel
 		basicScorePanel.add(awayTeamLogo);
@@ -408,6 +413,10 @@ public class Game {
 		return basicScorePanel;
 	}
 
+	/**
+	 * Used to draw the headline scores when looking at a specific team
+	 * 
+	 */
 	public JPanel drawBasicScoreWithLogosAndDate() {
 		// creates a date of format MM/DD/YY
 		String dateFormat = myDate.get(Calendar.MONTH) + "/"
@@ -456,11 +465,9 @@ public class Game {
 			awayLabel.setFont(winner);
 			homeLabel.setFont(loser);
 		}
-		// creat logo to add in front of team name
+		// create logo to add in front of team name
 		JLabel homeTeamLogo = new JLabel(homeTeam.getLogo());
 		JLabel awayTeamLogo = new JLabel(awayTeam.getLogo());
-		// homeTeamLogo.setPreferredSize(new Dimension(100,100));
-		// awayTeamLogo.setPreferredSize(new Dimension(50,100));
 
 		// add the created labels and logos back to the panel
 		basicScorePanel.add(awayTeamLogo);
@@ -480,8 +487,7 @@ public class Game {
 
 	/**
 	 * Gives a detailed description of the game
-	 * TODO a batting list
-	 * @return
+	 * @return JPanel with two JPanels (LogoBar and LineScore) 
 	 */
 	public JPanel drawDetailed() {
 		JPanel detailedGame = new JPanel();
@@ -489,13 +495,10 @@ public class Game {
 		GridLayout layout = new GridLayout(2, 1);// currently two objects will
 													// exist on the Panel
 		detailedGame.setLayout(layout);
-
-		// detailedGame.setLayout(new BoxLayout(detailedGame,
-		// BoxLayout.Y_AXIS));
 		detailedGame.setFont(tablefont);
 		detailedGame.add(this.drawLogoBar());// adds the logo bar
 		detailedGame.add(this.drawLineScore());// adds the line score
-		detailedGame.setToolTipText(this.venue);// the toolTip describes the
+		detailedGame.setToolTipText(this.venue);// the tooltip describes the
 												// park the game is being played
 												// at
 
@@ -503,8 +506,7 @@ public class Game {
 	}
 
 	/**
-	 * Creates a logo JPanel
-	 * 1x3 grid displaying both logos and a description of the game
+	 * Creates the LogoBar JPanel, a 1x3 grid displaying both logos and a description of the game
 	 */
 	private JPanel drawLogoBar() {
 		JPanel logoBar = new JPanel();
@@ -530,8 +532,7 @@ public class Game {
 
 	/**
 	 * Draws a line Score
-	 * @param currentGame the game which is to be drawn
-	 * @return a JScroll with the line score
+	 * @return a JScrollPane with the line score
 	 */
 	private JScrollPane drawLineScore() {
 		final int AWAY = 0;
@@ -564,7 +565,7 @@ public class Game {
 			// places the inning data in the correct data array cell
 			data[HOME][i + tableLabels.length - homeScoreInning.length] = homeScoreInning[i];
 		}
-		
+
 		// Create a JTable of data with headers tableLabels
 		lineTable = new JTable(data, tableLabels);
 		lineTable.setFont(tablefont);
@@ -586,92 +587,23 @@ public class Game {
 		JScrollPane scroll = new JScrollPane(lineTable);
 		// scroll.setSize(500, 100);
 		scroll.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		scroll.setFont(tablefont);
 		scroll.setPreferredSize(new Dimension(500, 100));
 		return scroll;
-		/*
-		 * JPanel homePanel = new JPanel(); JPanel awayPanel = new JPanel();
-		 * 
-		 * //A 3x1 gridlayout of a flow panel //the flow houses the individual
-		 * game GridLayout combinedLineLayout = new GridLayout(3,2); FlowLayout
-		 * homeLineLayout = new FlowLayout(); FlowLayout awayLineLayout = new
-		 * FlowLayout();
-		 * 
-		 * homePanel.setLayout(homeLineLayout);
-		 * awayPanel.setLayout(awayLineLayout);
-		 * basicScore.setLayout(combinedLineLayout);
-		 * 
-		 * Icon homeLogo = this.getHomeTeam().getLogo(); Icon awayLogo =
-		 * this.getAwayTeam().getLogo();
-		 * 
-		 * 
-		 * int[] combinedLine = this.getLine();//gets the line from the Game
-		 * 
-		 * String homeTeamScores = ""; String awayTeamScores = ""; String
-		 * lineScoreTopLine =
-		 * "                                   1  2  3  4  5  6  7  8  9 10 R  H  E"
-		 * ;
-		 * 
-		 * //Set lineScore data
-		 * 
-		 * for (int i = 0; i < combinedLine.length / 2; i++) {//go through the
-		 * array totally by using two seperate halves int tempScore =
-		 * combinedLine[i]; awayTeamScores = awayTeamScores + combinedLine[i];
-		 * if (tempScore < 10)//the score is a single digit { awayTeamScores =
-		 * awayTeamScores + "  "; //needs a space to even it out with double
-		 * digits } //awayTeam info is first, homeTeam follows i + half of array
-		 * length tempScore = combinedLine[i + combinedLine.length / 2];
-		 * homeTeamScores = homeTeamScores + combinedLine[i +
-		 * combinedLine.length / 2]; if (tempScore < 10)//the score is a single
-		 * digit { homeTeamScores = homeTeamScores + "  "; //needs a space to
-		 * even it out with double digits } }
-		 * 
-		 * String homeTeamString = this.getHomeTeam().getCity() + " "+
-		 * this.getHomeTeam().getName(); String awayTeamString =
-		 * this.getAwayTeam().getCity() + " "+ this.getAwayTeam().getName();
-		 * 
-		 * //Make the strings of equal length. The Phillies have the longest
-		 * name //at 21 characters
-		 * 
-		 * for (int i = homeTeamString.length(); i <
-		 * "Philidelphia Phillies".length(); i++) { homeTeamString =
-		 * homeTeamString + " ";//add a blank to the end } for (int i =
-		 * awayTeamString.length(); i < "Philidelphia Phillies".length(); i++) {
-		 * awayTeamString = awayTeamString + " "; } awayTeamString =
-		 * awayTeamString + "\t"; homeTeamString = homeTeamString + "\t";
-		 * //makes a label of the top line JLabel innings = new
-		 * JLabel(lineScoreTopLine); //the two lines below make a label of the
-		 * line of a team by combining their name and score. //attaches logo to
-		 * the front JLabel homeTeamLabel = new JLabel( homeTeamString + " " +
-		 * homeTeamScores); JLabel awayTeamLabel = new JLabel(awayTeamString +
-		 * " " + awayTeamScores);
-		 * 
-		 * JLabel awayLogoLabel = new JLabel(awayLogo); JLabel homeLogoLabel =
-		 * new JLabel(homeLogo); //Basic Score tooltip displays park
-		 * basicScore.setToolTipText(this.getVenue());
-		 * 
-		 * homePanel.add(homeTeamLabel);//adds the home Team Label to the panel
-		 * awayPanel.add(awayTeamLabel);//same as above for away Team
-		 * 
-		 * 
-		 * //TODO turn this into a table basicScore.add(new JLabel());
-		 * basicScore.add(innings); basicScore.add(awayLogoLabel);
-		 * basicScore.add(awayTeamLabel); basicScore.add(homeLogoLabel);
-		 * basicScore.add(homeTeamLabel);
-		 */
+
 	}
 
 	/**
 	 * Is the game between two American league teams?
-	 * @return
+	 * @return True/False
 	 */
 	public boolean isAmericanLeague() {
 		return (homeTeam.isAmericanLeague() && awayTeam.isAmericanLeague());
 	}
 
 	/** Is the game between two National league teams?
-	* @return
+	* @return True/False
 	*/
 	public boolean isNationalLeague() {
 		return (homeTeam.isNationalLeague() && awayTeam.isNationalLeague());
@@ -679,12 +611,15 @@ public class Game {
 
 	/**
 	 * Is the game interLeague?
-	 * @return
+	 * @return True False
 	 */
 	public boolean isInterLeague() {
 		return !(isNationalLeague() || isAmericanLeague());
 	}
 
+	/**
+	 * Sets the Date
+	 */
 	private void setDate() {
 		String year = "year_";
 		String month = "month_";
@@ -709,8 +644,8 @@ public class Game {
 	}
 
 	/**
-	 * Takes the location of the game
-	 * IE Fenway Park
+	 * Sets the location (ballpark) of the game
+	 * 
 	 */
 	private void fixVenue() {
 		venue = Utility.JSONValueReader(lineScoreXML, locationKey);
@@ -739,7 +674,7 @@ public class Game {
 	/**
 	 * Determines if the team passed won the game
 	 * @param team the team to be checked
-	 * @return a boolean, true if the team won the game. False in anyother situation (loss, not complete)
+	 * @return a boolean, true if the team won the game. False in any other situation (loss, not complete)
 	 */
 	public boolean didTeamWin(String team) {
 		if (Utility.JSONValueReader(lineScoreXML, Game.statusKey).equals(
@@ -781,7 +716,7 @@ public class Game {
 	/**
 	 * Determines if the team passed lost the game
 	 * @param team the team to be checked
-	 * @return a boolean, true if the team lost the game. False in anyother situation (victory, not complete)
+	 * @return a boolean, true if the team lost the game. False in any other situation (victory, not complete)
 	 */
 	public boolean didTeamLose(String team) {
 		if (Utility.JSONValueReader(lineScoreXML, Game.statusKey).equals(

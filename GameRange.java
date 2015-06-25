@@ -11,7 +11,9 @@ import java.util.List;
 import javax.swing.JLabel;
 
 /**
+ * Class that holds the past five games for one team
  * @author Samuel Doud
+ * @author Ben Muirhead
  *
  */
 public class GameRange {
