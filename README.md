@@ -3,22 +3,21 @@ This program is a collaboration of Ben Muirhead and Samuel Doud
 
 ![MLB Scores](Screenshot of MLB Scores.PNG)
 
+###Overview
 This program displays MLB scores from 2013 to 2015. 
-To open the program, compile the enclosed java files (use 
-To view the detailed score of any game, simply click on that game. To change the selected date, simply change the dropdown date menu. To see the most recent games of a single team, select that team from the 
-This period can be a single date or a range of dates
+To open the program, compile the enclosed java files (use the editor or terminal of your choice) and run.
 
-If a single date is given, then the program will show the scores of all the
-games played on that day. The games are divided into their respective leagues.
+To view the detailed score of any game, click on that game. To change the selected date, simply change the dropdown date menu and press Go. To see the most recent games of a single team, select that team from the dropdown on the right
 
-If a range of dates is selected the user must also select a team, then the
-program will display the scores of that team over the given period.
 
-If the user clicks on a game, a detailed line score will appear at the bottom
-of the GUI.
+If a single date is given, then the program will show the scores of all the games played on that day. The games are divided into their respective leagues, as well as inter-league games.
 
+To view the detailed line score of a game, simply click on that game.
+
+###Classes
 The classes to the program are organized as such
 
+Run: Runs the program, generating the GUI
 GUI: a GUI to display the graphics components of the games
 
 GameDay: a class which organizes the games of a given date and sends Swing
