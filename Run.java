@@ -9,15 +9,15 @@
  * @author Ben Muirhead
  *
  */
-public class testRun {
+public class Run {
 	/**
 	 * Creates the GUI
 	 */
 	public static void main(String[] args) {
-		new testRun();
+		new Run();
 	}
 
-	public testRun() {
+	public Run() {
 		this.init();
 	}
 
