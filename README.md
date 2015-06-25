@@ -1,7 +1,11 @@
 # MLBscores
 This program is a collaboration of Ben Muirhead and Samuel Doud
 
-This program displays MLB scores for a given period.
+![MLB Scores](Screenshot of MLB Scores.PNG)
+
+This program displays MLB scores from 2013 to 2015. 
+To open the program, compile the enclosed java files (use 
+To view the detailed score of any game, simply click on that game. To change the selected date, simply change the dropdown date menu. To see the most recent games of a single team, select that team from the 
 This period can be a single date or a range of dates
 
 If a single date is given, then the program will show the scores of all the
