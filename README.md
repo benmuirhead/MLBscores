@@ -17,20 +17,17 @@ To view the detailed line score of a game, simply click on that game.
 ###Classes
 The classes to the program are organized as such
 
-Run: Runs the program, generating the GUI
-GUI: a GUI to display the graphics components of the games
+*Run: Runs the program, generating the GUI
 
-GameDay: a class which organizes the games of a given date and sends Swing
-components of score to the GUI in an organized fashion
+*GUI: creates the Graphical User Interface to display the graphics components of the games
+
+*Game: A class based on the URL accessed from the MLB API. It finds the information for a certain game as delegated by the GameDay or GameRange classes. Creates the Swing components to display the games.
+
+GameDay: Organizes the games of a given date and sends Swing components of score to the GUI in an organized fashion
 
 GameRange: Same function as GameDay except the given information is a single
 team over a range of dates
 
-Game: A class which finds the information for a certain game as delegated by
-the GameDay or GameRange classes. Creates the Swing components to display the
-games.
+Team: A class which stores the information for curent MLB teams. This information includes abbreviation, name, city, and logo. To quickly assign information, a binary search is implemented.
 
-Team: A class which stores the information for curent MLB teams. This
-information includes abbreviation, name, city, and logo. To quickly assign
-information, a binary search is implemented.
-
+Utility: Contains several utility methods, including a JSONValueReader and methods for converting Calendars to Dates and back
